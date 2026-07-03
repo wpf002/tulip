@@ -1,0 +1,171 @@
+// Tulip data model. LOCKED INVARIANT: every money column is BigInt integer cents.
+// No Float/Decimal for money, ever. All multi-row money mutations run inside a
+// single prisma.$transaction() in the API layer.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String        @id @default(cuid())
+  email         String        @unique
+  passwordHash  String
+  createdAt     DateTime      @default(now())
+  accounts      Account[]
+  debts         Debt[]
+  goals         Goal[]
+  properties    Property[]
+  budgets       Budget[]
+  transactions  Transaction[]
+}
+
+enum AccountType {
+  CHECKING
+  SAVINGS
+  CREDIT_CARD
+  INVESTMENT
+  RETIREMENT
+  LOAN
+  CASH
+}
+
+model Account {
+  id             String        @id @default(cuid())
+  userId         String
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name           String
+  type           AccountType
+  institution    String?
+  // Plaid linkage (Phase 1). Access tokens are stored encrypted at the API layer, never here in plaintext.
+  plaidItemId    String?
+  plaidAccountId String?       @unique
+  balanceCents   BigInt        @default(0)
+  currency       String        @default("USD")
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  transactions   Transaction[]
+
+  @@index([userId])
+}
+
+model Transaction {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accountId    String
+  account      Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  amountCents  BigInt   // signed: negative = outflow, positive = inflow
+  description  String
+  category     String?
+  merchant     String?
+  postedAt     DateTime
+  pending      Boolean  @default(false)
+  plaidTxnId   String?  @unique
+  createdAt    DateTime @default(now())
+
+  @@index([userId, postedAt])
+  @@index([accountId])
+}
+
+enum DebtType {
+  STUDENT_LOAN
+  MORTGAGE
+  AUTO
+  CREDIT_CARD
+  PERSONAL
+  OTHER
+}
+
+enum FederalPlan {
+  NONE
+  STANDARD
+  SAVE
+  IBR
+  PAYE
+  ICR
+}
+
+model Debt {
+  id                String      @id @default(cuid())
+  userId            String
+  user              User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name              String
+  type              DebtType
+  balanceCents      BigInt
+  aprBps            Int         // APR in basis points (780 = 7.80%). Integer, no floats.
+  minPaymentCents   BigInt
+  // Student-loan specific (Phase 2)
+  isFederal         Boolean     @default(false)
+  subsidized        Boolean?
+  servicer          String?
+  federalPlan       FederalPlan @default(NONE)
+  pslfPaymentsMade  Int?        @default(0)
+  // Mortgage specific (Phase 2)
+  originalTermMonths Int?
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  @@index([userId])
+}
+
+enum GoalType {
+  DEBT_PAYOFF
+  PROPERTY
+  EMERGENCY_FUND
+  RETIREMENT
+  SAVINGS
+  CUSTOM
+}
+
+model Goal {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name         String
+  type         GoalType
+  targetCents  BigInt
+  savedCents   BigInt   @default(0)
+  targetDate   DateTime
+  priority     Int      @default(5)
+  // brand mapping: DEBT_PAYOFF=red, PROPERTY=green, RETIREMENT=purple, EMERGENCY_FUND=white
+  colorTag     String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model Property {
+  id               String   @id @default(cuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  label            String
+  address          String?
+  estimatedValueCents BigInt
+  mortgageBalanceCents BigInt @default(0)
+  isRental         Boolean  @default(false)
+  monthlyRentCents BigInt?
+  monthlyExpensesCents BigInt?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model Budget {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category       String
+  monthlyLimitCents BigInt
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([userId, category])
+  @@index([userId])
+}

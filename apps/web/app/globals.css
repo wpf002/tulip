@@ -1,0 +1,19 @@
+:root {
+  /* Brand: dark matte navy base, tulip accent by goal type */
+  --navy: #0f1b2d;
+  --navy-soft: #16263d;
+  --ink: #0a1220;
+  --offwhite: #f4f1ea;
+  --slate: #8a97a8;
+  --tulip-debt: #e2503f;    /* red    — debt payoff */
+  --tulip-property: #3f9b5c;/* green  — property */
+  --tulip-retire: #7a5cc0;  /* purple — retirement */
+  --tulip-emergency: #f4f1ea;/* white — emergency fund */
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--navy);
+  color: var(--offwhite);
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
