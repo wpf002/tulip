@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { api, getToken, formatUSDExact } from '../../lib/api';
+import { AppNav } from '../../components/AppNav';
 
 interface BudgetDto {
   id: string;
@@ -71,12 +71,10 @@ export default function BudgetPage() {
 
   return (
     <main style={{ maxWidth: 760, margin: '0 auto', padding: '2.5rem 1.5rem' }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-        <h1 style={{ fontSize: '1.25rem', margin: 0 }}>🌷 Budget</h1>
-        <Link href="/dashboard" className="btn-link">
-          ← Dashboard
-        </Link>
-      </header>
+      <AppNav />
+      <h1 className="display" style={{ fontSize: '2rem', margin: '0 0 0.5rem' }}>
+        Budget
+      </h1>
 
       {/* The one-tap sweep card */}
       {suggest && suggest.surplusCents > 0 && suggest.destination && (

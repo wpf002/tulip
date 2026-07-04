@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { api, getToken, formatUSD, formatUSDExact } from '../../lib/api';
+import { AppNav } from '../../components/AppNav';
 
 interface DebtDto {
   id: string;
@@ -92,19 +92,12 @@ export default function DebtPage() {
 
   return (
     <main style={{ maxWidth: 760, margin: '0 auto', padding: '2.5rem 1.5rem' }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-        <h1 style={{ fontSize: '1.25rem', margin: 0 }}>🌷 Debt freedom</h1>
-        <Link href="/dashboard" className="btn-link">
-          ← Dashboard
-        </Link>
-      </header>
+      <AppNav />
 
       {/* HERO: the Debt-Free Date */}
       <section style={{ margin: '2.5rem 0', textAlign: 'center' }}>
-        <p style={{ color: 'var(--slate)', margin: 0, textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.1em' }}>
-          Debt-free date
-        </p>
-        <p style={{ fontSize: '3rem', fontWeight: 700, margin: '0.25rem 0', color: 'var(--tulip-debt)' }}>
+        <p className="eyebrow">Debt-free date</p>
+        <p className="display" style={{ fontSize: '3.2rem', margin: '0.25rem 0', color: 'var(--tulip-debt)' }}>
           {plan ? formatMonthYear(plan.debtFreeDate) : error ? '—' : '…'}
         </p>
         {plan && (

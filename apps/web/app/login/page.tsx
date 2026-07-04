@@ -32,7 +32,7 @@ export default function LoginPage() {
 
   return (
     <main style={{ maxWidth: 400, margin: '0 auto', padding: '6rem 1.5rem' }}>
-      <h1 style={{ fontSize: '2rem', marginBottom: '0.25rem' }}>🌷 Tulip</h1>
+      <h1 className="display" style={{ fontSize: '2.2rem', marginBottom: '0.25rem' }}>🌷 Tulip</h1>
       <p style={{ color: 'var(--slate)', marginBottom: '2rem' }}>
         {mode === 'login' ? 'Welcome back.' : 'Plant the first seed.'}
       </p>

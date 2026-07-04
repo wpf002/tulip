@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { api, getToken, formatUSD, formatUSDExact } from '../../lib/api';
+import { AppNav } from '../../components/AppNav';
 
 interface PropertyDto {
   id: string;
@@ -83,12 +83,10 @@ export default function PropertyPage() {
 
   return (
     <main style={{ maxWidth: 760, margin: '0 auto', padding: '2.5rem 1.5rem' }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-        <h1 style={{ fontSize: '1.25rem', margin: 0 }}>🌷 Property</h1>
-        <Link href="/dashboard" className="btn-link">
-          ← Dashboard
-        </Link>
-      </header>
+      <AppNav />
+      <h1 className="display" style={{ fontSize: '2rem', margin: '0 0 0.5rem' }}>
+        Property
+      </h1>
 
       <section className="card" style={{ margin: '1.5rem 0' }}>
         <h2 style={{ fontSize: '1rem', marginTop: 0 }}>Rental deal analyzer</h2>

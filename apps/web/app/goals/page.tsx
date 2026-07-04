@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { api, getToken, formatUSD, formatUSDExact } from '../../lib/api';
+import { AppNav } from '../../components/AppNav';
 
 interface GoalDto {
   id: string;
@@ -66,12 +66,10 @@ export default function GoalsPage() {
 
   return (
     <main style={{ maxWidth: 760, margin: '0 auto', padding: '2.5rem 1.5rem' }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-        <h1 style={{ fontSize: '1.25rem', margin: 0 }}>🌷 Goals</h1>
-        <Link href="/dashboard" className="btn-link">
-          ← Dashboard
-        </Link>
-      </header>
+      <AppNav />
+      <h1 className="display" style={{ fontSize: '2rem', margin: '0 0 0.5rem' }}>
+        Goals
+      </h1>
 
       <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', margin: '1.5rem 0' }}>
         {(goals ?? []).map((g) => {

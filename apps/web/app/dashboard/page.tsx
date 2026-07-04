@@ -2,16 +2,15 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import {
   api,
-  clearToken,
   getToken,
   formatUSD,
   formatUSDExact,
   type AccountDto,
   type NetWorthDto,
 } from '../../lib/api';
+import { AppNav } from '../../components/AppNav';
 import { NetWorthTrend } from '../../components/NetWorthTrend';
 import { PlaidLinkButton } from '../../components/PlaidLinkButton';
 import { HealthDial } from '../../components/HealthDial';
@@ -79,38 +78,11 @@ export default function DashboardPage() {
 
   return (
     <main style={{ maxWidth: 760, margin: '0 auto', padding: '2.5rem 1.5rem' }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-        <h1 style={{ fontSize: '1.25rem', margin: 0 }}>🌷 Tulip</h1>
-        <nav style={{ display: 'flex', gap: '1rem', alignItems: 'baseline' }}>
-          <Link href="/debt" className="btn-link">
-            Debt freedom
-          </Link>
-          <Link href="/goals" className="btn-link">
-            Goals
-          </Link>
-          <Link href="/budget" className="btn-link">
-            Budget
-          </Link>
-          <Link href="/property" className="btn-link">
-            Property
-          </Link>
-          <button
-            className="btn-link"
-            onClick={() => {
-              clearToken();
-              router.push('/login');
-            }}
-          >
-            Log out
-          </button>
-        </nav>
-      </header>
+      <AppNav />
 
       <section style={{ margin: '2.5rem 0' }}>
-        <p style={{ color: 'var(--slate)', margin: 0, textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.1em' }}>
-          Net worth
-        </p>
-        <p style={{ fontSize: '3rem', fontWeight: 700, margin: '0.25rem 0' }}>
+        <p className="eyebrow">Net worth</p>
+        <p className="display numeric" style={{ fontSize: '3.2rem', margin: '0.25rem 0' }}>
           {netWorth ? formatUSDExact(netWorth.netWorthCents) : '—'}
         </p>
         {netWorth && (
