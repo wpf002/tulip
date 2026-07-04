@@ -59,14 +59,14 @@ cp .env.example .env          # fill in DATABASE_URL, PLAID, ANTHROPIC keys
 pnpm db:generate
 pnpm db:migrate
 pnpm db:seed
-pnpm dev                      # web :3000, api :4000
+pnpm dev                      # web :3001, api :4001 (3000/4000 clash with another local project)
 ```
 
 ## Prove it works (the POC slice)
 
 ```bash
 pnpm --filter @tulip/core test          # 7 passing: money + payoff engines
-curl -s localhost:4000/debt/compare -X POST -H 'content-type: application/json' \
+curl -s localhost:4001/debt/compare -X POST -H 'content-type: application/json' \
   -d '{"loans":[{"id":"cc","name":"Visa","balanceDollars":5000,"aprAnnual":0.2299,"minPaymentDollars":100}],"extraMonthlyDollars":300}'
 ```
 

@@ -17,3 +17,59 @@ body {
   color: var(--offwhite);
   font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
+
+.card {
+  background: var(--navy-soft);
+  border: 1px solid rgba(244, 241, 234, 0.06);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+.field {
+  background: var(--ink);
+  border: 1px solid rgba(244, 241, 234, 0.12);
+  border-radius: 8px;
+  color: var(--offwhite);
+  padding: 0.7rem 0.9rem;
+  font-size: 1rem;
+}
+.field:focus { outline: 2px solid var(--tulip-property); border-color: transparent; }
+.btn-primary {
+  background: var(--tulip-property);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.65rem 1.1rem;
+}
+.btn-primary:disabled { opacity: 0.5; cursor: default; }
+.btn-secondary {
+  background: transparent;
+  border: 1px solid rgba(244, 241, 234, 0.25);
+  border-radius: 8px;
+  color: var(--offwhite);
+  cursor: pointer;
+  font-size: 0.95rem;
+  padding: 0.6rem 1rem;
+}
+.btn-secondary:disabled { opacity: 0.5; cursor: default; }
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--slate);
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0;
+  text-decoration: underline;
+}
+.chip {
+  background: transparent;
+  border: 1px solid rgba(244, 241, 234, 0.2);
+  border-radius: 999px;
+  color: var(--slate);
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 0.25rem 0.7rem;
+}
+.chip-active { background: var(--tulip-property); border-color: var(--tulip-property); color: #fff; }

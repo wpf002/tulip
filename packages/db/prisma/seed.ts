@@ -1,14 +1,16 @@
 import { PrismaClient, AccountType, DebtType, GoalType } from '@prisma/client';
+import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
 async function main() {
+  const passwordHash = await bcrypt.hash('demo-password-1234', 12);
   const user = await prisma.user.upsert({
     where: { email: 'demo@tulip.app' },
-    update: {},
+    update: { passwordHash },
     create: {
       email: 'demo@tulip.app',
-      passwordHash: 'REPLACE_WITH_BCRYPT_HASH', // seed only; real hashing in API auth
+      passwordHash,
       accounts: {
         create: [
           { name: 'Everyday Checking', type: AccountType.CHECKING, balanceCents: 340000n },

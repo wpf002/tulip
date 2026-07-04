@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3000",
+    "dev": "next dev -p 3001",
     "build": "next build",
-    "start": "next start -p 3000",
+    "start": "next start -p 3001",
     "lint": "next lint",
     "typecheck": "tsc --noEmit"
   },
@@ -13,7 +13,8 @@
     "@tulip/core": "workspace:*",
     "next": "^15.0.0",
     "react": "^18.3.0",
-    "react-dom": "^18.3.0"
+    "react-dom": "^18.3.0",
+    "react-plaid-link": "^4.1.1"
   },
   "devDependencies": {
     "@types/node": "^20.16.0",

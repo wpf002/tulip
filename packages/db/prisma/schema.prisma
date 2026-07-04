@@ -22,6 +22,37 @@ model User {
   properties    Property[]
   budgets       Budget[]
   transactions  Transaction[]
+  plaidItems    PlaidItem[]
+  netWorthSnapshots NetWorthSnapshot[]
+}
+
+// Plaid access tokens live ONLY here, encrypted with AES-256-GCM at the API layer
+// (iv:ciphertext:authTag, hex). Never plaintext, never in Account.
+model PlaidItem {
+  id                   String   @id @default(cuid())
+  userId               String
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plaidItemId          String   @unique
+  encryptedAccessToken String
+  institutionName      String?
+  syncCursor           String?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@index([userId])
+}
+
+// One row per user per sync/day; powers the trailing net-worth series.
+model NetWorthSnapshot {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  netWorthCents   BigInt
+  assetsCents     BigInt
+  liabilitiesCents BigInt
+  capturedAt      DateTime @default(now())
+
+  @@index([userId, capturedAt])
 }
 
 enum AccountType {

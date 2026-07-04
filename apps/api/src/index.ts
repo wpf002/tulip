@@ -1,3 +1,4 @@
+import './env.js';
 import { buildServer } from './server.js';
 
 const port = Number(process.env.API_PORT ?? 4000);
