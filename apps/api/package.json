@@ -12,6 +12,7 @@
   "dependencies": {
     "@fastify/cors": "^10.0.0",
     "@fastify/jwt": "^9.0.0",
+    "@tulip/ai": "workspace:^",
     "@tulip/core": "workspace:*",
     "@tulip/db": "workspace:*",
     "bcryptjs": "^2.4.3",
