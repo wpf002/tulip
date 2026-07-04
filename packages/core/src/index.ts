@@ -5,5 +5,6 @@ export * from './debt/mortgage.js';
 export * from './debt/student-loan.js';
 export * from './router/index.js';
 export * from './goals/index.js';
+export * from './reallocation/index.js';
 export * from './health/index.js';
 export * from './property/index.js';

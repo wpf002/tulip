@@ -86,6 +86,9 @@ export default function DashboardPage() {
           <Link href="/goals" className="btn-link">
             Goals
           </Link>
+          <Link href="/budget" className="btn-link">
+            Budget
+          </Link>
           <button
             className="btn-link"
             onClick={() => {
