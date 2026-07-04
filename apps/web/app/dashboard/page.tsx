@@ -14,6 +14,7 @@ import {
 } from '../../lib/api';
 import { NetWorthTrend } from '../../components/NetWorthTrend';
 import { PlaidLinkButton } from '../../components/PlaidLinkButton';
+import { HealthDial } from '../../components/HealthDial';
 
 const TYPE_LABELS: Record<AccountDto['type'], string> = {
   CHECKING: 'Checking',
@@ -89,6 +90,9 @@ export default function DashboardPage() {
           <Link href="/budget" className="btn-link">
             Budget
           </Link>
+          <Link href="/property" className="btn-link">
+            Property
+          </Link>
           <button
             className="btn-link"
             onClick={() => {
@@ -114,6 +118,8 @@ export default function DashboardPage() {
           </p>
         )}
       </section>
+
+      <HealthDial />
 
       <section className="card">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>

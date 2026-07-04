@@ -8,6 +8,8 @@ import { accountRoutes, transactionRoutes } from './routes/accounts.js';
 import { netWorthRoutes } from './routes/networth.js';
 import { goalRoutes, routerRoutes } from './routes/goals.js';
 import { budgetRoutes, reallocateRoutes } from './routes/budgets.js';
+import { propertyRoutes } from './routes/property.js';
+import { healthScoreRoutes } from './routes/health-score.js';
 import { plaidPlugin } from './plugins/plaid.js';
 import { registerAuthenticate } from './plugins/authenticate.js';
 
@@ -29,7 +31,9 @@ export async function buildServer() {
   await app.register(routerRoutes, { prefix: '/router' });
   await app.register(budgetRoutes, { prefix: '/budgets' });
   await app.register(reallocateRoutes, { prefix: '/reallocate' });
+  await app.register(propertyRoutes, { prefix: '/property' });
+  await app.register(healthScoreRoutes, { prefix: '/health' });
 
-  // ROADMAP: property, flint
+  // ROADMAP: flint
   return app;
 }
