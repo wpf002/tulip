@@ -6,8 +6,10 @@
  */
 import Anthropic from '@anthropic-ai/sdk';
 import { verifyGrounded, type GroundingResult } from './guardrail.js';
+import { toPlainProse } from './prose.js';
 
 export * from './guardrail.js';
+export * from './prose.js';
 
 const SYSTEM_PROMPT = `You are Flint, the financial advisor voice of Tulip.
 
@@ -52,10 +54,11 @@ export class Flint {
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: userContent }],
     });
-    return response.content
+    const text = response.content
       .filter((b): b is Anthropic.TextBlock => b.type === 'text')
       .map((b) => b.text)
       .join('');
+    return toPlainProse(text);
   }
 
   private async guarded(userContent: string, context: unknown): Promise<FlintReply> {
