@@ -1,11 +1,16 @@
 import type { ReactNode } from 'react';
-import { Fraunces } from 'next/font/google';
+import localFont from 'next/font/local';
 import './globals.css';
 
-const fraunces = Fraunces({
-  subsets: ['latin'],
+// Self-hosted (apps/web/fonts, SIL OFL) so builds never fetch from Google Fonts.
+const fraunces = localFont({
+  src: [
+    { path: '../fonts/fraunces-latin.woff2', style: 'normal' },
+    { path: '../fonts/fraunces-latin-italic.woff2', style: 'italic' },
+  ],
+  weight: '100 900',
   variable: '--font-display',
-  axes: ['opsz', 'SOFT', 'WONK'],
+  display: 'swap',
 });
 
 export const metadata = {
