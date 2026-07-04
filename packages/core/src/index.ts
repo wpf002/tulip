@@ -1,6 +1,7 @@
 export * from './money/index.js';
 export * from './debt/amortization.js';
 export * from './debt/payoff.js';
+export * from './debt/mortgage.js';
 export * from './debt/student-loan.js';
 export * from './router/index.js';
 export * from './goals/index.js';

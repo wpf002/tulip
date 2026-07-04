@@ -11,6 +11,8 @@ export interface PayoffPlanResult {
   totalPaid: Cents;
   /** Per-loan payoff month, in the order each debt is cleared. */
   payoffOrder: Array<{ loanId: string; name: string; payoffMonth: number; interestPaid: Cents }>;
+  /** Total remaining balance after each month — powers the payoff chart. */
+  monthlySchedule: Array<{ month: number; remainingBalance: Cents; interestAccrued: Cents }>;
 }
 
 function orderLoans(loans: Loan[], strategy: Strategy): Loan[] {
@@ -47,6 +49,7 @@ export function planPayoff(
   const balances = new Map<string, Cents>(ordered.map((l) => [l.id, l.balance]));
   const interestPaid = new Map<string, Cents>(ordered.map((l) => [l.id, ZERO]));
   const payoffOrder: PayoffPlanResult['payoffOrder'] = [];
+  const monthlySchedule: PayoffPlanResult['monthlySchedule'] = [];
 
   let totalInterest = ZERO;
   let totalPaid = ZERO;
@@ -56,6 +59,7 @@ export function planPayoff(
 
   while (remaining().length > 0 && month < MAX_MONTHS) {
     month += 1;
+    let monthInterest = ZERO;
 
     // 1) accrue interest on every open loan
     for (const l of remaining()) {
@@ -64,6 +68,7 @@ export function planPayoff(
       balances.set(l.id, add(bal, interest));
       interestPaid.set(l.id, add(interestPaid.get(l.id)!, interest));
       totalInterest = add(totalInterest, interest);
+      monthInterest = add(monthInterest, interest);
     }
 
     // 2) budget = sum of minimums (open loans) + extra, all rolled to focus loan
@@ -90,6 +95,16 @@ export function planPayoff(
         });
       }
     }
+
+    let remainingBalance = ZERO;
+    for (const bal of balances.values()) remainingBalance = add(remainingBalance, bal);
+    const previous = monthlySchedule[monthlySchedule.length - 1];
+    if (previous && remainingBalance >= previous.remainingBalance) {
+      throw new Error(
+        'Payments do not cover monthly interest — this plan never reaches debt-free. Increase the minimums or extra budget.',
+      );
+    }
+    monthlySchedule.push({ month, remainingBalance, interestAccrued: monthInterest });
   }
 
   return {
@@ -99,6 +114,7 @@ export function planPayoff(
     totalInterest,
     totalPaid,
     payoffOrder,
+    monthlySchedule,
   };
 }
 

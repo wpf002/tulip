@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import {
   api,
   clearToken,
@@ -78,15 +79,20 @@ export default function DashboardPage() {
     <main style={{ maxWidth: 760, margin: '0 auto', padding: '2.5rem 1.5rem' }}>
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
         <h1 style={{ fontSize: '1.25rem', margin: 0 }}>🌷 Tulip</h1>
-        <button
-          className="btn-link"
-          onClick={() => {
-            clearToken();
-            router.push('/login');
-          }}
-        >
-          Log out
-        </button>
+        <nav style={{ display: 'flex', gap: '1rem', alignItems: 'baseline' }}>
+          <Link href="/debt" className="btn-link">
+            Debt freedom
+          </Link>
+          <button
+            className="btn-link"
+            onClick={() => {
+              clearToken();
+              router.push('/login');
+            }}
+          >
+            Log out
+          </button>
+        </nav>
       </header>
 
       <section style={{ margin: '2.5rem 0' }}>

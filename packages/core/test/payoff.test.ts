@@ -29,4 +29,28 @@ describe('debt payoff engine', () => {
     const plan = planPayoff(loans, fromDollars('400'), 'snowball', new Date('2026-01-15'));
     expect(plan.payoffOrder[0]!.loanId).toBe('a'); // 5000 is smallest here too
   });
+
+  it('hand-checked monthly schedule: two 0% loans, $100 minimums, no extra', () => {
+    // A $300 / B $500, $100 min each. Focus A (tie → smaller balance).
+    // m1: 800−200=600, m2: 400, m3: A clears → 200, m4: 100, m5: 0.
+    const zero: Loan[] = [
+      { id: 'a', name: 'A', balance: fromDollars('300'), aprAnnual: 0, minPayment: fromDollars('100') },
+      { id: 'b', name: 'B', balance: fromDollars('500'), aprAnnual: 0, minPayment: fromDollars('100') },
+    ];
+    const plan = planPayoff(zero, fromDollars('0'), 'avalanche', new Date('2026-01-15'));
+    expect(plan.monthsToDebtFree).toBe(5);
+    expect(plan.monthlySchedule.map((m) => m.remainingBalance)).toEqual([60000, 40000, 20000, 10000, 0]);
+    expect(plan.monthlySchedule.every((m) => m.interestAccrued === 0)).toBe(true);
+    expect(plan.payoffOrder.map((p) => p.loanId)).toEqual(['a', 'b']);
+  });
+
+  it('throws instead of running forever when payments never cover interest', () => {
+    // $300k @ 6% accrues $1,500/mo interest; a $500 budget can never amortize it.
+    const nonAmortizing: Loan[] = [
+      { id: 'm', name: 'Mortgage', balance: fromDollars('300000'), aprAnnual: 0.06, minPayment: fromDollars('500') },
+    ];
+    expect(() => planPayoff(nonAmortizing, fromDollars('0'), 'avalanche', new Date('2026-01-15'))).toThrow(
+      /never reaches debt-free/,
+    );
+  });
 });
