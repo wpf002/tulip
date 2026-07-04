@@ -6,6 +6,7 @@ import { debtRoutes } from './routes/debt.js';
 import { authRoutes } from './routes/auth.js';
 import { accountRoutes, transactionRoutes } from './routes/accounts.js';
 import { netWorthRoutes } from './routes/networth.js';
+import { goalRoutes, routerRoutes } from './routes/goals.js';
 import { plaidPlugin } from './plugins/plaid.js';
 import { registerAuthenticate } from './plugins/authenticate.js';
 
@@ -23,7 +24,9 @@ export async function buildServer() {
   await app.register(transactionRoutes, { prefix: '/transactions' });
   await app.register(netWorthRoutes, { prefix: '/networth' });
   await app.register(debtRoutes, { prefix: '/debt' });
+  await app.register(goalRoutes, { prefix: '/goals' });
+  await app.register(routerRoutes, { prefix: '/router' });
 
-  // ROADMAP: goals, router, budget, property, flint
+  // ROADMAP: budget, property, flint
   return app;
 }
