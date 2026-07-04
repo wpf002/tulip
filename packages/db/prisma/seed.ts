@@ -32,6 +32,29 @@ async function main() {
     },
   });
   console.log('Seeded demo user:', user.email);
+
+  // Demo transactions for the current month (skip if any already exist).
+  const txnCount = await prisma.transaction.count({ where: { userId: user.id } });
+  const checking = await prisma.account.findFirst({
+    where: { userId: user.id, type: AccountType.CHECKING },
+  });
+  if (txnCount === 0 && checking) {
+    const now = new Date();
+    const day = (d: number) => new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), d));
+    await prisma.transaction.createMany({
+      data: [
+        { userId: user.id, accountId: checking.id, amountCents: 520000n, description: 'Payroll — Acme Corp', category: 'Income', postedAt: day(1) },
+        { userId: user.id, accountId: checking.id, amountCents: -184500n, description: 'Rent — Maple St Apartments', category: 'Housing', postedAt: day(1) },
+        { userId: user.id, accountId: checking.id, amountCents: -14237n, description: 'Whole Foods Market', merchant: 'Whole Foods', category: 'Groceries', postedAt: day(2) },
+        { userId: user.id, accountId: checking.id, amountCents: -4680n, description: 'Shell Gas Station', merchant: 'Shell', category: 'Gas', postedAt: day(2) },
+        { userId: user.id, accountId: checking.id, amountCents: -8925n, description: "Trader Joe's", merchant: "Trader Joe's", category: 'Groceries', postedAt: day(3) },
+        { userId: user.id, accountId: checking.id, amountCents: -6250n, description: 'Nonna Pizzeria', merchant: 'Nonna', category: 'Dining', postedAt: day(3) },
+        { userId: user.id, accountId: checking.id, amountCents: -1599n, description: 'Netflix', merchant: 'Netflix', category: 'Subscriptions', postedAt: day(3) },
+        { userId: user.id, accountId: checking.id, amountCents: -3410n, description: 'Corner Coffee', merchant: 'Corner Coffee', category: 'Dining', postedAt: day(4) },
+      ],
+    });
+    console.log('Seeded demo transactions');
+  }
 }
 
 main().finally(() => prisma.$disconnect());

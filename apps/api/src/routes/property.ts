@@ -1,7 +1,14 @@
 import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
-import { prisma, type Property } from '@tulip/db';
-import { cents, analyzeDeal, analyzeSellVsHold, propertyEquity } from '@tulip/core';
+import { AccountType, prisma, type Property } from '@tulip/db';
+import {
+  cents,
+  analyzeDeal,
+  analyzeSellVsHold,
+  propertyEquity,
+  simulatePurchaseImpact,
+  type Goal,
+} from '@tulip/core';
 
 function serializeProperty(p: Property) {
   return {
@@ -136,6 +143,72 @@ export async function propertyRoutes(app: FastifyInstance) {
         cashOnCash: deal.cashOnCash,
         dscr: Number.isFinite(deal.dscr) ? deal.dscr : null,
         monthlyCashflowCents: Number(deal.monthlyCashflow),
+      };
+    } catch (err) {
+      return reply.status(400).send({ error: err instanceof Error ? err.message : 'Invalid deal' });
+    }
+  });
+
+  /** How a prospective purchase reshapes net worth and shifts other goal dates. */
+  app.post('/purchase-impact', { preHandler: [app.authenticate] }, async (req, reply) => {
+    const parsed = dealSchema
+      .extend({ monthlySurplusCents: z.number().int().nonnegative().default(100000) })
+      .safeParse(req.body);
+    if (!parsed.success) return reply.status(400).send({ error: parsed.error.flatten() });
+    const b = parsed.data;
+
+    const [liquidAgg, goals] = await prisma.$transaction([
+      prisma.account.aggregate({
+        where: {
+          userId: req.user.sub,
+          type: { in: [AccountType.CHECKING, AccountType.SAVINGS, AccountType.CASH] },
+        },
+        _sum: { balanceCents: true },
+      }),
+      prisma.goal.findMany({ where: { userId: req.user.sub } }),
+    ]);
+
+    const engineGoals: Goal[] = goals.map((g) => ({
+      id: g.id,
+      name: g.name,
+      target: cents(Number(g.targetCents)),
+      saved: cents(Number(g.savedCents)),
+      targetDate: g.targetDate.toISOString().slice(0, 10),
+      priority: g.priority,
+    }));
+
+    try {
+      const impact = simulatePurchaseImpact({
+        deal: {
+          purchasePrice: cents(b.purchasePriceCents),
+          downPayment: cents(b.downPaymentCents),
+          aprAnnual: b.aprBps / 10000,
+          termMonths: b.termMonths,
+          monthlyRent: cents(b.monthlyRentCents),
+          monthlyExpenses: cents(b.monthlyExpensesCents),
+          ...(b.closingCostsCents !== undefined ? { closingCosts: cents(b.closingCostsCents) } : {}),
+        },
+        liquidCash: cents(Number(liquidAgg._sum.balanceCents ?? 0n)),
+        goals: engineGoals,
+        monthlySurplus: cents(b.monthlySurplusCents),
+        startDate: new Date(),
+      });
+      return {
+        cashRequiredCents: Number(impact.cashRequired),
+        cashAfterCents: Number(impact.cashAfter),
+        affordable: impact.affordable,
+        netWorthDeltaCents: Number(impact.netWorthDelta),
+        monthlyCashflowCents: Number(impact.monthlyCashflow),
+        surplusAfterCents: Number(impact.surplusAfter),
+        goalShifts: impact.goalShifts.map((s) => ({
+          goalId: s.goalId,
+          name: s.name,
+          monthlyBeforeCents: Number(s.monthlyBefore),
+          monthlyAfterCents: Number(s.monthlyAfter),
+          dateBefore: s.dateBefore,
+          dateAfter: s.dateAfter,
+          monthsDelta: s.monthsDelta,
+        })),
       };
     } catch (err) {
       return reply.status(400).send({ error: err instanceof Error ? err.message : 'Invalid deal' });

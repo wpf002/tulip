@@ -1,6 +1,7 @@
 import { type Cents, cents, sub, add } from '../money/index.js';
 import { mortgagePayment, scheduledPayment, type Mortgage } from '../debt/mortgage.js';
 import { amortize } from '../debt/amortization.js';
+import { allocateCustom, type Goal } from '../goals/index.js';
 
 export interface DealInputs {
   purchasePrice: Cents;
@@ -164,5 +165,95 @@ export function analyzeSellVsHold(inputs: SellVsHoldInputs): SellVsHoldResult {
     hold: { projectedEquity: holdEquity, cumulativeCashflow, projectedValue: holdProjected },
     refi,
     bestOption: options[0]!.key,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Purchase impact: how buying this property reshapes net worth + goal dates
+// ---------------------------------------------------------------------------
+
+export interface PurchaseImpactInputs {
+  deal: DealInputs;
+  /** Liquid cash on hand before the purchase. */
+  liquidCash: Cents;
+  /** Open goals currently sharing the monthly surplus. */
+  goals: Goal[];
+  /** Monthly surplus currently flowing to those goals (split evenly). */
+  monthlySurplus: Cents;
+  startDate: Date;
+}
+
+export interface GoalShift {
+  goalId: string;
+  name: string;
+  monthlyBefore: Cents;
+  monthlyAfter: Cents;
+  dateBefore: string | null;
+  dateAfter: string | null;
+  monthsDelta: number | null; // negative = sooner
+}
+
+export interface PurchaseImpactResult {
+  cashRequired: Cents; // down payment + closing costs
+  cashAfter: Cents; // negative means you can't afford the deal
+  affordable: boolean;
+  /**
+   * Immediate net-worth change: you gain equity equal to the down payment but
+   * spend down payment + closing costs, so the delta is −closingCosts.
+   */
+  netWorthDelta: Cents;
+  monthlyCashflow: Cents;
+  surplusAfter: Cents; // monthlySurplus + deal cashflow (can go negative)
+  goalShifts: GoalShift[];
+}
+
+/**
+ * The roadmap promise: show how a prospective purchase reshapes net worth and
+ * shifts every other goal's date. Goal projections assume the surplus is split
+ * evenly across open goals before and after (allocateCustom, penny-exact).
+ */
+export function simulatePurchaseImpact(inputs: PurchaseImpactInputs): PurchaseImpactResult {
+  const deal = analyzeDeal(inputs.deal);
+  const closing = inputs.deal.closingCosts ?? cents(0);
+  const cashRequired = add(inputs.deal.downPayment, closing);
+  const cashAfter = sub(inputs.liquidCash, cashRequired);
+  const surplusAfter = add(inputs.monthlySurplus, deal.monthlyCashflow);
+
+  const open = inputs.goals.filter((g) => g.target > g.saved);
+  const weights = open.map(() => 1);
+  const before =
+    open.length > 0 && inputs.monthlySurplus > 0
+      ? allocateCustom(open, inputs.monthlySurplus, weights, inputs.startDate)
+      : null;
+  const after =
+    open.length > 0 && surplusAfter > 0
+      ? allocateCustom(open, surplusAfter, weights, inputs.startDate)
+      : null;
+
+  const goalShifts: GoalShift[] = open.map((g) => {
+    const dateBefore = before?.projectedDates[g.id] ?? null;
+    const dateAfter = after?.projectedDates[g.id] ?? null;
+    const monthsBefore = before?.monthsToComplete[g.id] ?? null;
+    const monthsAfter = after?.monthsToComplete[g.id] ?? null;
+    return {
+      goalId: g.id,
+      name: g.name,
+      monthlyBefore: before?.perGoalMonthly[g.id] ?? cents(0),
+      monthlyAfter: after?.perGoalMonthly[g.id] ?? cents(0),
+      dateBefore,
+      dateAfter,
+      monthsDelta:
+        monthsBefore !== null && monthsAfter !== null ? monthsAfter - monthsBefore : null,
+    };
+  });
+
+  return {
+    cashRequired,
+    cashAfter,
+    affordable: cashAfter >= 0,
+    netWorthDelta: cents(-closing),
+    monthlyCashflow: deal.monthlyCashflow,
+    surplusAfter,
+    goalShifts,
   };
 }

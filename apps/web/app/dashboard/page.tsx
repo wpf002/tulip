@@ -15,6 +15,7 @@ import { NetWorthTrend } from '../../components/NetWorthTrend';
 import { PlaidLinkButton } from '../../components/PlaidLinkButton';
 import { HealthDial } from '../../components/HealthDial';
 import { FlintChat } from '../../components/FlintChat';
+import { RecentTransactions } from '../../components/RecentTransactions';
 
 const TYPE_LABELS: Record<AccountDto['type'], string> = {
   CHECKING: 'Checking',
@@ -146,6 +147,8 @@ export default function DashboardPage() {
           </div>
         ))}
       </section>
+
+      <RecentTransactions />
 
       <FlintChat />
     </main>
