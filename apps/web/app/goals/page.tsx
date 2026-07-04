@@ -71,7 +71,7 @@ export default function GoalsPage() {
         Goals
       </h1>
 
-      <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', margin: '1.5rem 0' }}>
+      <section className="split-2" style={{ margin: '1.5rem 0' }}>
         {(goals ?? []).map((g) => {
           const pct = Math.min(1, g.savedCents / g.targetCents);
           const color = COLOR_VARS[g.colorTag] ?? 'var(--tulip-property)';
@@ -199,7 +199,7 @@ function ConflictSlider({ goals }: { goals: GoalDto[] }) {
         <span>{100 - weightA}% → {b.name}</span>
       </div>
       {scenario && (
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginTop: '1rem' }}>
+        <div className="split-2" style={{ marginTop: '1rem' }}>
           {[a, b].map((g) => (
             <div key={g.id} style={{ textAlign: 'center' }}>
               <p style={{ margin: 0, color: 'var(--slate)', fontSize: '0.85rem' }}>

@@ -55,12 +55,11 @@ export function FlintChat() {
 
   return (
     <div
-      className="card"
+      className="card flint-panel"
       style={{
         position: 'fixed',
         right: '1.5rem',
         bottom: '1.5rem',
-        width: 360,
         maxHeight: '70vh',
         display: 'flex',
         flexDirection: 'column',

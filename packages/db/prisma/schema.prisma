@@ -24,6 +24,51 @@ model User {
   transactions  Transaction[]
   plaidItems    PlaidItem[]
   netWorthSnapshots NetWorthSnapshot[]
+  // Household sharing
+  householdId   String?
+  household     Household?    @relation(fields: [householdId], references: [id], onDelete: SetNull)
+  // Advisor side: one-time code a client generates to grant an advisor access
+  advisorInviteCode String?   @unique
+  advisorLinks  AdvisorAccess[] @relation("AdvisorLinks")
+  clientLinks   AdvisorAccess[] @relation("ClientLinks")
+  notifications Notification[]
+}
+
+model Household {
+  id         String   @id @default(cuid())
+  name       String
+  inviteCode String   @unique
+  createdAt  DateTime @default(now())
+  members    User[]
+}
+
+// A standing, revocable view-only grant from client -> advisor.
+model AdvisorAccess {
+  id        String   @id @default(cuid())
+  advisorId String
+  advisor   User     @relation("AdvisorLinks", fields: [advisorId], references: [id], onDelete: Cascade)
+  clientId  String
+  client    User     @relation("ClientLinks", fields: [clientId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([advisorId, clientId])
+}
+
+model Notification {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String
+  title     String
+  body      String
+  actionUrl String?
+  // Prevents the same trigger from re-firing (e.g. one sweep nudge per month).
+  dedupeKey String?
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@unique([userId, dedupeKey])
+  @@index([userId, createdAt])
 }
 
 // Plaid access tokens live ONLY here, encrypted with AES-256-GCM at the API layer
@@ -165,6 +210,8 @@ model Goal {
   priority     Int      @default(5)
   // brand mapping: DEBT_PAYOFF=red, PROPERTY=green, RETIREMENT=purple, EMERGENCY_FUND=white
   colorTag     String?
+  // visible to everyone in the owner's household
+  shared       Boolean  @default(false)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
@@ -194,6 +241,8 @@ model Budget {
   user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   category       String
   monthlyLimitCents BigInt
+  // visible to everyone in the owner's household
+  shared         Boolean  @default(false)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 

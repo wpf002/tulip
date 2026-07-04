@@ -36,7 +36,7 @@ async function spendByCategory(userId: string, since: Date): Promise<Map<string,
   return map;
 }
 
-async function budgetStatus(userId: string) {
+export async function budgetStatus(userId: string) {
   const [budgets, spend] = await Promise.all([
     prisma.budget.findMany({ where: { userId }, orderBy: { category: 'asc' } }),
     spendByCategory(userId, monthStart(new Date())),
@@ -98,14 +98,13 @@ const applySchema = z
     message: 'Provide exactly one of goalId or debtId',
   });
 
-export async function reallocateRoutes(app: FastifyInstance) {
-  /**
-   * GET /reallocate/suggest — this month's sweepable surplus, the router's top
-   * destination for it, and (when that destination is a debt) the exact
-   * debt-free-date acceleration.
-   */
-  app.get('/suggest', { preHandler: [app.authenticate] }, async (req) => {
-    const userId = req.user.sub;
+/**
+ * This month's sweepable surplus, the router's top destination for it, and
+ * (when that destination is a debt) the exact debt-free-date acceleration.
+ * Shared by GET /reallocate/suggest and the notifications trigger scan.
+ */
+export async function computeSweepSuggestion(userId: string) {
+  {
     const status = await budgetStatus(userId);
     const surplus = detectSurplus(
       status.map(
@@ -170,6 +169,12 @@ export async function reallocateRoutes(app: FastifyInstance) {
         : null,
       debtFreeDelta,
     };
+  }
+}
+
+export async function reallocateRoutes(app: FastifyInstance) {
+  app.get('/suggest', { preHandler: [app.authenticate] }, async (req) => {
+    return computeSweepSuggestion(req.user.sub);
   });
 
   /**

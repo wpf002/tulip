@@ -11,6 +11,9 @@ import { budgetRoutes, reallocateRoutes } from './routes/budgets.js';
 import { propertyRoutes } from './routes/property.js';
 import { healthScoreRoutes } from './routes/health-score.js';
 import { flintRoutes } from './routes/flint.js';
+import { householdRoutes } from './routes/household.js';
+import { advisorRoutes } from './routes/advisor.js';
+import { notificationRoutes } from './routes/notifications.js';
 import { plaidPlugin } from './plugins/plaid.js';
 import { registerAuthenticate } from './plugins/authenticate.js';
 
@@ -35,6 +38,9 @@ export async function buildServer() {
   await app.register(propertyRoutes, { prefix: '/property' });
   await app.register(healthScoreRoutes, { prefix: '/health' });
   await app.register(flintRoutes, { prefix: '/flint' });
+  await app.register(householdRoutes, { prefix: '/household' });
+  await app.register(advisorRoutes, { prefix: '/advisor' });
+  await app.register(notificationRoutes, { prefix: '/notifications' });
 
   return app;
 }

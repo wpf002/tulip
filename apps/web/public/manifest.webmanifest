@@ -1,0 +1,17 @@
+{
+  "name": "Tulip — Grow wealth wisely",
+  "short_name": "Tulip",
+  "description": "Know what you have. Plan where it grows.",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#0f1b2d",
+  "theme_color": "#0f1b2d",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

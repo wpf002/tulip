@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { clearToken } from '../lib/api';
+import { NotificationsBell } from './NotificationsBell';
 
 const LINKS = [
   { href: '/dashboard', label: 'Overview' },
@@ -10,6 +11,8 @@ const LINKS = [
   { href: '/goals', label: 'Goals' },
   { href: '/budget', label: 'Budget' },
   { href: '/property', label: 'Property' },
+  { href: '/sharing', label: 'Sharing' },
+  { href: '/clients', label: 'Clients' },
 ];
 
 export function AppNav() {
@@ -26,6 +29,7 @@ export function AppNav() {
           {l.label}
         </Link>
       ))}
+      <NotificationsBell />
       <button
         className="btn-link"
         onClick={() => {

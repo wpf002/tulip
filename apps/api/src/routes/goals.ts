@@ -31,6 +31,7 @@ function serializeGoal(g: DbGoal) {
     targetDate: g.targetDate.toISOString().slice(0, 10),
     priority: g.priority,
     colorTag: g.colorTag ?? GOAL_COLORS[g.type],
+    shared: g.shared,
   };
 }
 
@@ -52,6 +53,7 @@ const goalBodySchema = z.object({
   savedCents: z.number().int().nonnegative().optional(),
   targetDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   priority: z.number().int().min(1).max(10).optional(),
+  shared: z.boolean().optional(),
 });
 
 const resolveQuerySchema = z.object({
@@ -108,6 +110,7 @@ export async function goalRoutes(app: FastifyInstance) {
         ...(g.savedCents !== undefined ? { savedCents: BigInt(g.savedCents) } : {}),
         ...(g.targetDate !== undefined ? { targetDate: new Date(`${g.targetDate}T00:00:00Z`) } : {}),
         ...(g.priority !== undefined ? { priority: g.priority } : {}),
+        ...(g.shared !== undefined ? { shared: g.shared } : {}),
       },
     });
     return { goal: serializeGoal(goal) };

@@ -124,15 +124,8 @@ export default function Home() {
 
       {/* Hero */}
       <section
-        style={{
-          alignItems: 'center',
-          display: 'grid',
-          gap: '3.5rem',
-          gridTemplateColumns: 'minmax(0, 7fr) minmax(0, 5fr)',
-          margin: '0 auto',
-          maxWidth: 1100,
-          padding: '4rem 1.5rem 5rem',
-        }}
+        className="hero-grid"
+        style={{ margin: '0 auto', maxWidth: 1100, padding: '4rem 1.5rem 5rem' }}
       >
         <div>
           <p className="eyebrow">Wealth management for the rest of us</p>
@@ -208,15 +201,8 @@ export default function Home() {
       {/* Flint */}
       <section style={{ background: 'var(--navy)', color: 'var(--offwhite)' }}>
         <div
-          style={{
-            alignItems: 'center',
-            display: 'grid',
-            gap: '3.5rem',
-            gridTemplateColumns: 'minmax(0, 6fr) minmax(0, 6fr)',
-            margin: '0 auto',
-            maxWidth: 1100,
-            padding: '5rem 1.5rem',
-          }}
+          className="hero-grid"
+          style={{ margin: '0 auto', maxWidth: 1100, padding: '5rem 1.5rem' }}
         >
           <div>
             <p className="eyebrow">🔥 Meet Flint</p>

@@ -17,6 +17,15 @@ export const metadata = {
   title: 'Tulip — Grow wealth wisely',
   description:
     'Tulip prescribes your next dollar, not just reports your last one. Every number engine-computed, never AI-invented.',
+  manifest: '/manifest.webmanifest',
+  icons: { icon: '/icon.svg' },
+  appleWebApp: { capable: true, title: 'Tulip', statusBarStyle: 'black-translucent' as const },
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#0f1b2d',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

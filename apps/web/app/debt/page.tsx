@@ -137,7 +137,7 @@ export default function DebtPage() {
 
       {/* Avalanche vs snowball, side by side, with the honest cost */}
       {compare && (
-        <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1.5rem' }}>
+        <section className="split-2" style={{ marginBottom: '1.5rem' }}>
           {(['avalanche', 'snowball'] as const).map((s) => (
             <div key={s} className="card" style={{ borderColor: strategy === s ? 'var(--tulip-debt)' : undefined }}>
               <p style={{ margin: 0, color: 'var(--slate)', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.08em' }}>
