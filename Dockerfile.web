@@ -1,0 +1,18 @@
+# Tulip web — Next.js. NEXT_PUBLIC_API_URL is inlined at build time, so it must
+# be passed as a build arg (Railway forwards service variables as build args).
+FROM node:20-slim
+
+WORKDIR /app
+RUN corepack enable && corepack prepare pnpm@9.12.0 --activate
+
+COPY . .
+RUN pnpm install --frozen-lockfile
+
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+RUN pnpm --filter @tulip/web build
+
+ENV NODE_ENV=production
+
+# next start honors -p; bind to Railway's $PORT.
+CMD ["sh", "-c", "pnpm --filter @tulip/web exec next start -p ${PORT:-3001}"]

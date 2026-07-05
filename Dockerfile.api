@@ -1,0 +1,22 @@
+# Tulip API — Fastify, run with tsx so workspace .ts package mains resolve
+# without a separate build step. @tulip/core is compiled because its main
+# points at dist/. Prisma migrations run on container start.
+FROM node:20-slim
+
+# Prisma needs openssl at build (generate) and runtime.
+RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-certificates \
+  && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+RUN corepack enable && corepack prepare pnpm@9.12.0 --activate
+
+# Install against the full workspace (frozen lockfile).
+COPY . .
+RUN pnpm install --frozen-lockfile
+RUN pnpm --filter @tulip/db exec prisma generate
+RUN pnpm --filter @tulip/core build
+
+ENV NODE_ENV=production
+
+# Apply any pending migrations, then boot the API on Railway's $PORT.
+CMD ["sh", "-c", "pnpm --filter @tulip/db exec prisma migrate deploy && pnpm --filter @tulip/api exec tsx src/index.ts"]
