@@ -67,7 +67,7 @@ async function runDetectors(userId: string): Promise<void> {
   for (const g of goals.filter((g) => g.savedCents >= g.targetCents)) {
     await createIfNew(userId, {
       type: 'GOAL_REACHED',
-      title: `Goal reached: ${g.name} 🌷`,
+      title: `Goal reached: ${g.name}`,
       body: `You've saved ${usd(Number(g.savedCents))} — the full target. Time to plant the next one.`,
       actionUrl: '/goals',
       dedupeKey: `goal-reached-${g.id}`,

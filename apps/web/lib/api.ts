@@ -74,3 +74,13 @@ export function formatUSD(cents: number): string {
 export function formatUSDExact(cents: number): string {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(cents / 100);
 }
+
+/** Turn a machine string ("STUDENT_LOAN", "credit_card") into "Student Loan". */
+export function humanize(value: string): string {
+  return value
+    .toLowerCase()
+    .split(/[_\s]+/)
+    .filter(Boolean)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+}

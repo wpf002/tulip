@@ -16,7 +16,7 @@ const fraunces = localFont({
 export const metadata = {
   title: 'Tulip — Grow wealth wisely',
   description:
-    'Tulip prescribes your next dollar, not just reports your last one. Every number engine-computed, never AI-invented.',
+    'Tulip tells you where your next dollar should go, not just where your last one went. Every number is calculated, never made up.',
   manifest: '/manifest.webmanifest',
   icons: { icon: '/icon.svg' },
   appleWebApp: { capable: true, title: 'Tulip', statusBarStyle: 'black-translucent' as const },

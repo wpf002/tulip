@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { api, formatUSDExact } from '../lib/api';
+import { PencilIcon } from './Icons';
 
 interface TxnDto {
   id: string;
@@ -78,8 +79,9 @@ export function RecentTransactions() {
                 setEditing(t.id);
                 setDraft(t.category ?? '');
               }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
             >
-              {t.category ?? 'uncategorized'} ✎
+              {t.category ?? 'Uncategorized'} <PencilIcon size={11} />
             </button>
           )}
           <span

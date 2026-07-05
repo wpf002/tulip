@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { api } from '../lib/api';
+import { BellIcon } from './Icons';
 
 interface NotificationDto {
   id: string;
@@ -53,9 +54,9 @@ export function NotificationsBell() {
       <button
         aria-label={`Notifications (${unread} unread)`}
         onClick={() => setOpen(!open)}
-        style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.05rem', position: 'relative', padding: '0 0.2rem' }}
+        style={{ background: 'none', border: 'none', color: 'var(--slate)', cursor: 'pointer', display: 'inline-flex', position: 'relative', padding: '0 0.2rem' }}
       >
-        🔔
+        <BellIcon size={18} />
         {unread > 0 && (
           <span
             className="numeric"

@@ -1,49 +1,50 @@
 import Link from 'next/link';
+import { TulipLogo, FlintFlame, CheckIcon } from '../components/Icons';
 
 /**
  * Editorial landing page. Light, generous whitespace, serif display type —
- * the app itself stays dark navy. Every stat here is honest: this product's
- * trust story is "engines compute, AI only narrates."
+ * the app itself stays dark navy. Every stat here is honest: Tulip does the
+ * math in tested code, and the advisor only explains what that code produced.
  */
 
 const FEATURES = [
   {
-    title: 'Debt Freedom Engine',
+    title: 'A real debt-free date',
     color: 'var(--tulip-debt)',
-    body: 'A real debt-free date, not a progress bar. Avalanche vs. snowball with the exact dollar cost of choosing feelings over math — recomputed live as you move a slider.',
+    body: 'An actual date, not a progress bar. See avalanche versus snowball side by side, with the exact dollars snowball costs you — and watch the date shift as you move a slider.',
   },
   {
-    title: 'Marginal Dollar Router',
+    title: 'Where your next dollar goes',
     color: 'var(--tulip-property)',
-    body: 'Tell Tulip you have $500 spare. It ranks every place that dollar could go — employer match first, always — with tax-adjusted returns, and splits it to the cent.',
+    body: 'Tell Tulip you have $500 to spare. It ranks every place that dollar could land — the employer match always comes first — adjusts for taxes, and splits it down to the cent.',
   },
   {
-    title: 'Goal Tradeoffs, Quantified',
+    title: 'Honest goal trade-offs',
     color: 'var(--tulip-retire)',
-    body: 'Rental down payment vs. student loans? Slide the allocation and watch both projected dates move. No more guessing what the tradeoff actually costs.',
+    body: 'Rental down payment or student loans? Slide the split and watch both dates move. No more guessing what the trade-off actually costs you.',
   },
   {
-    title: 'Budget Sweeps',
+    title: 'One-tap budget sweeps',
     color: 'var(--tulip-property)',
-    body: 'Under budget this month? One tap sweeps the surplus to your highest-return debt and shows precisely how many months sooner you become debt-free.',
+    body: 'Under budget this month? One tap sends the extra to your priciest debt and tells you exactly how many months sooner you pay it off.',
   },
   {
-    title: 'Property Analyzer',
+    title: 'Rental deal check',
     color: 'var(--tulip-property)',
-    body: 'Cap rate, cash-on-cash, DSCR, and monthly cashflow on any prospective rental — with the mortgage leg run through a real amortization engine.',
+    body: 'Cap rate, cash-on-cash, monthly cashflow, and whether it covers the mortgage — on any rental you are weighing, with the mortgage math done right.',
   },
   {
-    title: 'Financial Health Score',
+    title: 'A financial health score',
     color: 'var(--tulip-debt)',
-    body: 'One 0–100 number with fully transparent drivers: liquidity, rate-weighted debt burden, savings rate, and trajectory. Watch it move as you act.',
+    body: 'One number from 0 to 100, with the reasons behind it in plain sight: your cash cushion, how heavy your debt is, how much you save, and which way your net worth is headed.',
   },
 ];
 
 const STATS = [
-  { value: '100%', label: 'of numbers computed by deterministic engines' },
-  { value: '82', label: 'hand-checked tests behind every figure' },
-  { value: '0', label: 'numbers the AI is allowed to invent' },
-  { value: '1¢', label: 'precision — money is integer cents, never floats' },
+  { value: '100%', label: 'of your numbers are calculated, never guessed' },
+  { value: '90', label: 'hand-checked tests behind every figure' },
+  { value: '0', label: 'numbers the advisor is allowed to make up' },
+  { value: '1¢', label: 'we count in whole cents, never rough estimates' },
 ];
 
 function ProductPreview() {
@@ -109,8 +110,9 @@ export default function Home() {
           padding: '1.5rem',
         }}
       >
-        <span className="display" style={{ fontSize: '1.35rem' }}>
-          🌷 Tulip
+        <span className="display" style={{ fontSize: '1.35rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+          <TulipLogo size={24} />
+          Tulip
         </span>
         <nav style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
           <Link href="/login" className="btn-ghost-navy">
@@ -130,14 +132,12 @@ export default function Home() {
         <div>
           <p className="eyebrow">Wealth management for the rest of us</p>
           <h1 className="display" style={{ fontSize: 'clamp(2.6rem, 5.5vw, 4rem)', margin: '0 0 1.25rem' }}>
-            Know what you have.
-            <br />
-            Plan where it <em>grows</em>.
+            Know what you have. Plan where it <em>grows</em>.
           </h1>
           <p style={{ color: 'var(--slate-dark)', fontSize: '1.18rem', lineHeight: 1.6, margin: '0 0 2rem', maxWidth: 480 }}>
-            Every budgeting app reports your last dollar. Tulip prescribes your next one — a
-            debt-free date you can steer, goals with honest tradeoffs, and an AI advisor that is
-            never allowed to do its own math.
+            Most money apps just tell you what you already spent. Tulip shows you what to do next: a
+            debt-free date you can actually move, goals that lay out their real trade-offs, and an
+            advisor that can&apos;t fudge the numbers.
           </p>
           <div style={{ display: 'flex', gap: '0.9rem', flexWrap: 'wrap' }}>
             <Link href="/login" className="btn-navy">
@@ -205,15 +205,20 @@ export default function Home() {
           style={{ margin: '0 auto', maxWidth: 1100, padding: '5rem 1.5rem' }}
         >
           <div>
-            <p className="eyebrow">🔥 Meet Flint</p>
+            <p className="eyebrow" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+              <span style={{ color: '#f0a63a', display: 'inline-flex' }}>
+                <FlintFlame size={14} />
+              </span>
+              Meet Flint
+            </p>
             <h2 className="display" style={{ fontSize: 'clamp(1.9rem, 3.5vw, 2.6rem)', margin: '0 0 1.1rem' }}>
-              An AI advisor that <em>never</em> does its own math
+              An advisor that <em>never</em> makes the numbers up
             </h2>
             <p style={{ color: 'var(--slate)', fontSize: '1.05rem', lineHeight: 1.65, margin: 0 }}>
-              Ask “where should my next $500 go and why?” Flint narrates exactly what the engines
-              computed — nothing more. A guardrail checks every reply: any number that can&apos;t be
-              traced back to engine output is flagged, visibly, in the chat. That&apos;s our answer to
-              AI hallucinating your finances.
+              Ask “where should my next $500 go?” and Flint walks you through the answer your plan
+              already worked out — nothing more. Every reply gets checked: if a number can&apos;t be
+              traced to your real plan, it&apos;s flagged right there in the chat. No made-up figures,
+              ever.
             </p>
           </div>
           <div className="card" style={{ fontSize: '0.92rem' }}>
@@ -224,8 +229,8 @@ export default function Home() {
               First, $200 goes to your 401(k) match — that&apos;s an instant 57% effective return no
               debt payoff can beat. The remaining $300 belongs on the Visa at 22.99% APR, which
               moves your debt-free date to <strong>April 2028</strong>.
-              <span style={{ color: 'var(--tulip-property)', display: 'block', fontSize: '0.78rem', marginTop: '0.6rem' }}>
-                ✓ guardrail: every number traced to engine output
+              <span style={{ color: 'var(--tulip-property)', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.78rem', marginTop: '0.6rem' }}>
+                <CheckIcon size={13} /> Every number here traces back to your plan
               </span>
             </p>
           </div>
@@ -238,13 +243,13 @@ export default function Home() {
           How it works
         </p>
         <h2 className="display" style={{ fontSize: 'clamp(1.9rem, 3.5vw, 2.6rem)', margin: '0 auto 3rem', textAlign: 'center' }}>
-          Three steps to your first prescription
+          Three steps to your first plan
         </h2>
         <div style={{ display: 'grid', gap: '1.25rem', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))' }}>
           {[
-            ['01', 'Connect', 'Link accounts through Plaid or add balances by hand. Access tokens are encrypted at rest — never stored in plain text.'],
-            ['02', 'See', 'Net worth, a debt-free date, goal timelines, and a health score — every figure computed by tested engines, to the cent.'],
-            ['03', 'Act', 'Move a slider, accept a sweep, route a windfall. Tulip shows the exact consequence of each choice before you make it.'],
+            ['01', 'Connect', 'Link your accounts or type in a few balances. Anything sensitive is encrypted before it ever hits the database — never stored as plain text.'],
+            ['02', 'See', 'Your net worth, a debt-free date, goal timelines, and a health score — all worked out to the cent.'],
+            ['03', 'Act', 'Move a slider, accept a sweep, put a windfall to work. Tulip shows you exactly what each choice does before you make it.'],
           ].map(([n, title, body]) => (
             <div key={n} style={{ borderTop: '1px solid var(--hairline-light)', paddingTop: '1.5rem' }}>
               <p className="display numeric" style={{ color: 'var(--tulip-property)', fontSize: '1rem', margin: '0 0 0.5rem' }}>
@@ -288,7 +293,9 @@ export default function Home() {
             fontSize: '0.85rem',
           }}
         >
-          <span>🌷 Tulip — know what you have, plan where it grows.</span>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem' }}>
+            <TulipLogo size={18} /> Tulip — know what you have, plan where it grows.
+          </span>
           <span>Preview software. Not investment, legal, or tax advice.</span>
         </div>
       </footer>

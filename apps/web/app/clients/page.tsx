@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { api, getToken, formatUSD, formatUSDExact } from '../../lib/api';
+import { api, getToken, formatUSD, formatUSDExact, humanize } from '../../lib/api';
 import { AppNav } from '../../components/AppNav';
 
 interface ClientDto {
@@ -64,11 +64,15 @@ export default function ClientsPage() {
       </p>
 
       <section className="card" style={{ marginBottom: '1.5rem' }}>
-        <h2 style={{ fontSize: '1rem', marginTop: 0 }}>Add a client</h2>
+        <h2 style={{ fontSize: '1rem', marginTop: 0, marginBottom: '0.25rem' }}>Add a client</h2>
+        <p style={{ color: 'var(--slate)', fontSize: '0.88rem', margin: '0 0 1rem' }}>
+          An access code is a one-time code your client creates for you. Ask them to open{' '}
+          <strong>Sharing → Advisor access</strong> and tap <strong>Generate access code</strong>, then paste it here.
+        </p>
         <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
-          <input className="field" style={{ flex: 1, minWidth: 180 }} placeholder="Client's access code" value={code} onChange={(e) => setCode(e.target.value)} />
+          <input className="field" style={{ flex: 1, minWidth: 180 }} placeholder="Paste the code your client gave you" value={code} onChange={(e) => setCode(e.target.value)} />
           <button className="btn-primary" disabled={!code.trim()} onClick={addClient}>
-            Redeem code
+            Add client
           </button>
         </div>
         {notice && <p style={{ color: 'var(--slate)', margin: '0.6rem 0 0' }}>{notice}</p>}
@@ -132,7 +136,7 @@ function ClientCard({ client, onRemoved }: { client: ClientDto; onRemoved: () =>
             {overview.accounts.map((a, i) => (
               <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '0.15rem 0' }}>
                 <span>
-                  {a.name} <span style={{ color: 'var(--slate)', fontSize: '0.8rem' }}>{a.type}</span>
+                  {a.name} <span style={{ color: 'var(--slate)', fontSize: '0.8rem' }}>{humanize(a.type)}</span>
                 </span>
                 <span className="numeric">{formatUSDExact(a.balanceCents)}</span>
               </div>
@@ -152,7 +156,7 @@ function ClientCard({ client, onRemoved }: { client: ClientDto; onRemoved: () =>
                 </span>
               </div>
             ))}
-            {overview.debts.length === 0 && <p style={{ color: 'var(--slate)', margin: 0 }}>Debt-free 🎉</p>}
+            {overview.debts.length === 0 && <p style={{ color: 'var(--slate)', margin: 0 }}>No debts on record.</p>}
           </div>
           <div>
             <p className="eyebrow" style={{ marginBottom: '0.3rem' }}>

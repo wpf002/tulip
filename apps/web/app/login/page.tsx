@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { api, setToken } from '../../lib/api';
+import { TulipLogo } from '../../components/Icons';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -32,7 +33,10 @@ export default function LoginPage() {
 
   return (
     <main style={{ maxWidth: 400, margin: '0 auto', padding: '6rem 1.5rem' }}>
-      <h1 className="display" style={{ fontSize: '2.2rem', marginBottom: '0.25rem' }}>🌷 Tulip</h1>
+      <h1 className="display" style={{ fontSize: '2.2rem', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <TulipLogo size={30} />
+        Tulip
+      </h1>
       <p style={{ color: 'var(--slate)', marginBottom: '2rem' }}>
         {mode === 'login' ? 'Welcome back.' : 'Plant the first seed.'}
       </p>

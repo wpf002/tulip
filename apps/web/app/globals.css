@@ -228,3 +228,41 @@ body {
   .app-nav .wordmark { margin-right: 0; width: 100%; }
   .display { letter-spacing: -0.01em; }
 }
+
+/* ---- Nav polish: keep every label on one line ------------------------ */
+.app-nav a.nav-link,
+.app-nav .btn-link { white-space: nowrap; }
+.app-nav .wordmark { align-items: center; display: inline-flex; gap: 0.45rem; }
+
+/* ---- Flint typing indicator (replaces AI-sounding loading text) ------- */
+.typing { display: inline-flex; gap: 5px; align-items: center; padding: 0.4rem 0.2rem; }
+.typing span {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--slate);
+  animation: typing 1.15s infinite ease-in-out;
+}
+.typing span:nth-child(2) { animation-delay: 0.15s; }
+.typing span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes typing {
+  0%, 65%, 100% { opacity: 0.28; transform: translateY(0); }
+  32% { opacity: 1; transform: translateY(-4px); }
+}
+
+/* ---- Rental deal analyzer -------------------------------------------- */
+.deal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem 1.1rem; }
+.deal-field { display: grid; gap: 0.35rem; min-width: 0; }
+.deal-field input { width: 100%; min-width: 0; }
+.deal-field > span {
+  color: var(--slate); font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.money-input { position: relative; }
+.money-input > .adorn {
+  position: absolute; left: 0.8rem; top: 50%; transform: translateY(-50%);
+  color: var(--slate); pointer-events: none; font-size: 0.95rem;
+}
+.money-input input { padding-left: 1.6rem; width: 100%; }
+.stat-tile {
+  border: 1px solid var(--hairline-strong); border-radius: 12px;
+  padding: 0.85rem 0.9rem; text-align: center;
+}

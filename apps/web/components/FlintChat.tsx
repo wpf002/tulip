@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { api } from '../lib/api';
+import { FlintFlame, WarningIcon } from './Icons';
 
 interface ChatEntry {
   role: 'user' | 'flint';
@@ -45,10 +46,10 @@ export function FlintChat() {
     return (
       <button
         className="btn-primary"
-        style={{ position: 'fixed', right: '1.5rem', bottom: '1.5rem', borderRadius: 999 }}
+        style={{ position: 'fixed', right: '1.5rem', bottom: '1.5rem', borderRadius: 999, display: 'inline-flex', alignItems: 'center', gap: '0.45rem' }}
         onClick={() => setOpen(true)}
       >
-        🔥 Ask Flint
+        <FlintFlame size={16} /> Ask Flint
       </button>
     );
   }
@@ -66,17 +67,22 @@ export function FlintChat() {
         zIndex: 50,
       }}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-        <strong>🔥 Flint</strong>
-        <button className="btn-link" onClick={() => setOpen(false)}>
-          ✕
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+        <strong style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+          <span style={{ color: '#f0a63a', display: 'inline-flex' }}>
+            <FlintFlame size={16} />
+          </span>
+          Flint
+        </strong>
+        <button className="btn-link" aria-label="Close" onClick={() => setOpen(false)} style={{ fontSize: '1.1rem', lineHeight: 1 }}>
+          ×
         </button>
       </div>
       <div style={{ flex: 1, overflowY: 'auto', display: 'grid', gap: '0.5rem', marginBottom: '0.6rem' }}>
         {entries.length === 0 && (
           <p style={{ color: 'var(--slate)', fontSize: '0.85rem' }}>
-            Ask about your numbers — e.g. “where should my next $500 go and why?” Flint only
-            narrates what the engines computed; it never does its own math.
+            Ask Flint anything about your money — like “where should my next $500 go?” Every number
+            it gives you comes straight from your plan. It never makes one up.
           </p>
         )}
         {entries.map((e, i) => (
@@ -92,13 +98,19 @@ export function FlintChat() {
           >
             {e.text}
             {e.role === 'flint' && e.grounded === false && (
-              <p style={{ color: 'var(--tulip-debt)', fontSize: '0.75rem', margin: '0.4rem 0 0' }}>
-                ⚠ guardrail: contains numbers not traceable to engine output
+              <p style={{ color: 'var(--tulip-debt)', fontSize: '0.75rem', margin: '0.4rem 0 0', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                <WarningIcon size={13} /> This reply used a number we couldn&apos;t tie back to your plan — double-check it.
               </p>
             )}
           </div>
         ))}
-        {busy && <p style={{ color: 'var(--slate)', fontSize: '0.85rem' }}>Flint is reading the engines…</p>}
+        {busy && (
+          <div className="typing" aria-label="Flint is thinking">
+            <span />
+            <span />
+            <span />
+          </div>
+        )}
       </div>
       <div style={{ display: 'flex', gap: '0.5rem' }}>
         <input

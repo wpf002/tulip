@@ -113,10 +113,17 @@ export default function PropertyPage() {
     }
   }
 
-  const field = (key: keyof typeof form, label: string) => (
-    <label style={{ display: 'grid', gap: '0.25rem', fontSize: '0.85rem', color: 'var(--slate)' }}>
-      {label}
-      <input className="field" inputMode="decimal" value={form[key]} onChange={(e) => setForm({ ...form, [key]: e.target.value })} />
+  const field = (key: keyof typeof form, label: string, opts: { money?: boolean } = {}) => (
+    <label className="deal-field">
+      <span>{label}</span>
+      {opts.money ? (
+        <div className="money-input">
+          <span className="adorn">$</span>
+          <input className="field" inputMode="decimal" value={form[key]} onChange={(e) => setForm({ ...form, [key]: e.target.value })} />
+        </div>
+      ) : (
+        <input className="field" inputMode="decimal" value={form[key]} onChange={(e) => setForm({ ...form, [key]: e.target.value })} />
+      )}
     </label>
   );
 
@@ -128,35 +135,36 @@ export default function PropertyPage() {
       </h1>
 
       <section className="card" style={{ margin: '1.5rem 0' }}>
-        <h2 style={{ fontSize: '1rem', marginTop: 0 }}>Rental deal analyzer</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '0.6rem' }}>
-          {field('price', 'Purchase price $')}
-          {field('down', 'Down payment $')}
-          {field('closing', 'Closing costs $')}
-          {field('apr', 'APR %')}
-          {field('term', 'Term (months)')}
-          {field('rent', 'Monthly rent $')}
-          {field('expenses', 'Monthly expenses $')}
-          {field('surplus', 'Your surplus $/mo')}
+        <h2 style={{ fontSize: '1.05rem', marginTop: 0, marginBottom: '0.25rem' }}>Rental deal analyzer</h2>
+        <p style={{ color: 'var(--slate)', fontSize: '0.88rem', margin: '0 0 1.35rem' }}>
+          Enter a rental you&apos;re weighing and see whether the numbers work.
+        </p>
+        <div className="deal-grid">
+          {field('price', 'Purchase price', { money: true })}
+          {field('down', 'Down payment', { money: true })}
+          {field('closing', 'Closing costs', { money: true })}
+          {field('apr', 'Mortgage rate %')}
+          {field('term', 'Loan term (months)')}
+          {field('rent', 'Monthly rent', { money: true })}
+          {field('expenses', 'Monthly expenses', { money: true })}
+          {field('surplus', 'Your monthly surplus', { money: true })}
         </div>
-        <button className="btn-primary" style={{ marginTop: '0.75rem' }} onClick={analyze}>
+        <button className="btn-primary" style={{ marginTop: '1.35rem' }} onClick={analyze}>
           Analyze deal
         </button>
         {error && <p style={{ color: 'var(--tulip-debt)' }}>{error}</p>}
 
         {deal && (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.75rem', marginTop: '1rem', textAlign: 'center' }}>
-            <Metric label="Cap rate" value={pct(deal.capRate)} good={deal.capRate >= 0.05} />
-            <Metric label="Cash-on-cash" value={pct(deal.cashOnCash)} good={deal.cashOnCash >= 0.06} />
-            <Metric label="DSCR" value={deal.dscr === null ? '∞' : deal.dscr.toFixed(2)} good={(deal.dscr ?? 99) >= 1.2} />
-            <Metric
-              label="Cashflow/mo"
-              value={formatUSDExact(deal.monthlyCashflowCents)}
-              good={deal.monthlyCashflowCents > 0}
-            />
-            <p style={{ gridColumn: '1 / -1', margin: 0, color: 'var(--slate)', fontSize: '0.85rem' }}>
-              Loan {formatUSD(deal.loanAmountCents)} · debt service {formatUSDExact(deal.monthlyDebtServiceCents)}/mo ·
-              NOI {formatUSDExact(deal.monthlyNOICents)}/mo
+          <div style={{ marginTop: '1.5rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '0.75rem' }}>
+              <Metric label="Cap rate" value={pct(deal.capRate)} good={deal.capRate >= 0.05} />
+              <Metric label="Cash-on-cash" value={pct(deal.cashOnCash)} good={deal.cashOnCash >= 0.06} />
+              <Metric label="Covers mortgage" value={deal.dscr === null ? 'Yes' : `${deal.dscr.toFixed(2)}×`} good={(deal.dscr ?? 99) >= 1.2} />
+              <Metric label="Cashflow / mo" value={formatUSDExact(deal.monthlyCashflowCents)} good={deal.monthlyCashflowCents > 0} />
+            </div>
+            <p style={{ margin: '0.9rem 0 0', color: 'var(--slate)', fontSize: '0.85rem' }}>
+              {formatUSD(deal.loanAmountCents)} loan · {formatUSDExact(deal.monthlyDebtServiceCents)}/mo mortgage ·
+              {' '}{formatUSDExact(deal.monthlyNOICents)}/mo after expenses
             </p>
           </div>
         )}
@@ -300,11 +308,11 @@ function OwnedProperty({ property }: { property: PropertyDto }) {
 
 function Metric({ label, value, good }: { label: string; value: string; good: boolean }) {
   return (
-    <div>
-      <p style={{ margin: 0, color: 'var(--slate)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+    <div className="stat-tile">
+      <p style={{ margin: 0, color: 'var(--slate)', fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
         {label}
       </p>
-      <p className="numeric" style={{ margin: '0.2rem 0 0', fontSize: '1.3rem', fontWeight: 700, color: good ? 'var(--tulip-property)' : 'var(--tulip-debt)' }}>
+      <p className="numeric" style={{ margin: '0.3rem 0 0', fontSize: '1.3rem', fontWeight: 700, color: good ? 'var(--tulip-property)' : 'var(--tulip-debt)' }}>
         {value}
       </p>
     </div>

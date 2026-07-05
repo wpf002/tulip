@@ -2,8 +2,9 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { api, getToken, formatUSD, formatUSDExact } from '../../lib/api';
+import { api, getToken, formatUSD, formatUSDExact, humanize } from '../../lib/api';
 import { AppNav } from '../../components/AppNav';
+import { WarningIcon } from '../../components/Icons';
 
 interface DebtDto {
   id: string;
@@ -255,7 +256,7 @@ function DebtList({ debts, onChanged }: { debts: DebtDto[] | null; onChanged: ()
           <select className="field" value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })}>
             {TYPE_OPTIONS.map((t) => (
               <option key={t} value={t}>
-                {t.replace('_', ' ')}
+                {humanize(t)}
               </option>
             ))}
           </select>
@@ -283,8 +284,8 @@ function DebtList({ debts, onChanged }: { debts: DebtDto[] | null; onChanged: ()
             </p>
           </div>
           <strong style={{ fontVariantNumeric: 'tabular-nums' }}>{formatUSDExact(d.balanceCents)}</strong>
-          <button className="btn-link" onClick={() => removeDebt(d.id)} aria-label={`Delete ${d.name}`}>
-            ✕
+          <button className="btn-link" onClick={() => removeDebt(d.id)} aria-label={`Delete ${d.name}`} style={{ fontSize: '1.1rem', lineHeight: 1 }}>
+            ×
           </button>
         </div>
       ))}
@@ -382,8 +383,8 @@ function StudentLoanPanel({ debts }: { debts: DebtDto[] }) {
           )}
           {analysis.refi && analysis.refi.refiForfeitsFederalBenefits && (
             <div style={{ border: '1px solid var(--tulip-debt)', borderRadius: 8, padding: '0.75rem' }}>
-              <p style={{ margin: '0 0 0.35rem', color: 'var(--tulip-debt)', fontWeight: 700 }}>
-                ⚠ Refinancing this federal loan forfeits:
+              <p style={{ margin: '0 0 0.35rem', color: 'var(--tulip-debt)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <WarningIcon size={15} /> Refinancing this federal loan gives up:
               </p>
               <ul style={{ margin: 0, paddingLeft: '1.2rem', color: 'var(--slate)' }}>
                 {analysis.refi.lostBenefits.map((b) => (

@@ -1,4 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="96" fill="#0f1b2d"/>
-  <text x="256" y="330" font-size="280" text-anchor="middle">🌷</text>
+  <rect width="512" height="512" rx="112" fill="#0f1b2d"/>
+  <g transform="translate(76 66) scale(15)">
+    <path d="M12 12.6C8.5 12.2 6.8 9.5 6.8 6.2 8 7.4 9.2 7.4 9.8 5.6 10.3 7.2 11 7.4 12 5c1 2.4 1.7 2.2 2.2.6.6 1.8 1.8 1.8 3-.6 0 3.3-1.7 6-5.2 6.4Z" fill="#e35b47"/>
+    <path d="M12 12.4V21" stroke="#2e7a46" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M12 16.6C9.3 15.6 7.2 17.2 6.6 20.4 9.7 20.6 11.8 19.4 12 16.6Z" fill="#3f9b5c"/>
+  </g>
 </svg>
