@@ -56,7 +56,7 @@ export function PlaidLinkButton({ onLinked }: Props) {
   return (
     <span style={{ display: 'inline-flex', flexDirection: 'column', gap: '0.35rem' }}>
       <button className="btn-primary" onClick={start} disabled={busy}>
-        {busy ? '…' : '+ Link a bank'}
+        {busy ? '…' : 'Link Bank'}
       </button>
       {error && <span style={{ color: 'var(--tulip-debt)', fontSize: '0.85rem' }}>{error}</span>}
     </span>

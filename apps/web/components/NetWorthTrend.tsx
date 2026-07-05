@@ -57,7 +57,7 @@ export function NetWorthTrend({ series }: Props) {
       <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--slate)', fontSize: '0.82rem', marginTop: '0.6rem' }}>
         <span className="numeric">{first.date}</span>
         {flat ? (
-          <span>Holding steady so far</span>
+          <span />
         ) : (
           <span style={{ color: up ? 'var(--tulip-property)' : 'var(--tulip-debt)' }}>
             {up ? '+' : ''}

@@ -150,7 +150,7 @@ export default function PropertyPage() {
           {field('surplus', 'Monthly surplus', { money: true })}
         </div>
         <button className="btn-primary" style={{ marginTop: '1.35rem' }} onClick={analyze}>
-          Analyze deal
+          Analyze
         </button>
         {error && <p style={{ color: 'var(--tulip-debt)' }}>{error}</p>}
 
