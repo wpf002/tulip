@@ -105,7 +105,7 @@ export default function BudgetPage() {
       {notice && <p style={{ color: 'var(--tulip-property)' }}>{notice}</p>}
 
       <section style={{ margin: '1.5rem 0' }}>
-        <h2 style={{ fontSize: '1rem' }}>This month</h2>
+        <h2 style={{ fontSize: '1rem' }}>This Month</h2>
         {(budgets ?? []).map((b) => {
           const pct = Math.min(1, b.spentCents / b.monthlyLimitCents);
           const over = b.overCents > 0;
@@ -134,7 +134,7 @@ export default function BudgetPage() {
       </section>
 
       <section className="card">
-        <h2 style={{ fontSize: '1rem', marginTop: 0 }}>Add / update a category</h2>
+        <h2 style={{ fontSize: '1rem', marginTop: 0 }}>Add / Update a Category</h2>
         <div style={{ display: 'flex', gap: '0.6rem' }}>
           <input className="field" style={{ flex: 2 }} placeholder="Category (e.g. Groceries)" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} />
           <input className="field" style={{ flex: 1 }} placeholder="Limit $/mo" inputMode="decimal" value={form.limit} onChange={(e) => setForm({ ...form, limit: e.target.value })} />

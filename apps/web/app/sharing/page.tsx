@@ -170,7 +170,7 @@ export default function SharingPage() {
 
       {/* Advisor access */}
       <section className="card">
-        <h2 style={{ fontSize: '1rem', marginTop: 0 }}>Advisor access</h2>
+        <h2 style={{ fontSize: '1rem', marginTop: 0 }}>Advisor Access</h2>
         <p style={{ color: 'var(--slate)', margin: '0 0 0.75rem' }}>
           Give a financial advisor a view-only window into your finances. They can look; they can never touch.
         </p>

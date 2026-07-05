@@ -64,7 +64,7 @@ export default function ClientsPage() {
       </p>
 
       <section className="card" style={{ marginBottom: '1.5rem' }}>
-        <h2 style={{ fontSize: '1rem', marginTop: 0, marginBottom: '0.25rem' }}>Add a client</h2>
+        <h2 style={{ fontSize: '1rem', marginTop: 0, marginBottom: '0.25rem' }}>Add a Client</h2>
         <p style={{ color: 'var(--slate)', fontSize: '0.88rem', margin: '0 0 1rem' }}>
           An access code is a one-time code your client creates for you. Ask them to open{' '}
           <strong>Sharing → Advisor access</strong> and tap <strong>Generate access code</strong>, then paste it here.

@@ -11,15 +11,15 @@ interface HealthDto {
 
 const LABELS: Record<keyof HealthDto['subscores'], string> = {
   liquidity: 'Liquidity',
-  debtBurden: 'Debt burden',
-  savingsRate: 'Savings rate',
+  debtBurden: 'Debt Burden',
+  savingsRate: 'Savings Rate',
   netWorthTrajectory: 'Trajectory',
 };
 
 function band(score: number): { label: string; color: string } {
   if (score >= 75) return { label: 'Thriving', color: 'var(--tulip-property)' };
   if (score >= 50) return { label: 'Stable', color: '#d4a72c' };
-  return { label: 'Needs attention', color: 'var(--tulip-debt)' };
+  return { label: 'Needs Attention', color: 'var(--tulip-debt)' };
 }
 
 /** Credit-score-style dial with transparent per-driver breakdown. */
@@ -58,7 +58,7 @@ export function HealthDial() {
         </div>
         <div style={{ flex: 1, minWidth: 220 }}>
           <p style={{ margin: '0 0 0.5rem' }}>
-            Financial health: <strong style={{ color }}>{label}</strong>
+            Financial Health: <strong style={{ color }}>{label}</strong>
           </p>
           {(Object.keys(LABELS) as (keyof HealthDto['subscores'])[]).map((k) => (
             <div key={k} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.3rem' }}>

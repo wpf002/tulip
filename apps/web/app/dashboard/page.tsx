@@ -23,7 +23,7 @@ const TYPE_LABELS: Record<AccountDto['type'], string> = {
   CASH: 'Cash',
   INVESTMENT: 'Investments',
   RETIREMENT: 'Retirement',
-  CREDIT_CARD: 'Credit cards',
+  CREDIT_CARD: 'Credit Cards',
   LOAN: 'Loans',
 };
 

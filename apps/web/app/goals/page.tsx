@@ -126,7 +126,7 @@ function NextDollarPanel() {
       <div style={{ display: 'flex', gap: '0.6rem' }}>
         <input className="field" style={{ flex: 1 }} inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="Amount $" />
         <button className="btn-primary" onClick={route} disabled={!Number(amount)}>
-          Show me
+          Plan
         </button>
       </div>
       {error && <p style={{ color: 'var(--tulip-debt)' }}>{error}</p>}

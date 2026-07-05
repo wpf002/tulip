@@ -42,7 +42,7 @@ export function RecentTransactions() {
 
   return (
     <section style={{ margin: '2rem 0' }}>
-      <h2 style={{ fontSize: '1rem', marginBottom: '0.75rem' }}>Recent transactions</h2>
+      <h2 style={{ fontSize: '1rem', marginBottom: '0.75rem' }}>Recent Transactions</h2>
       {txns.length === 0 && (
         <p style={{ color: 'var(--slate)' }}>
           No transactions yet — they&apos;ll appear here after your first account sync.

@@ -135,7 +135,7 @@ export default function PropertyPage() {
       </h1>
 
       <section className="card" style={{ margin: '1.5rem 0' }}>
-        <h2 style={{ fontSize: '1.05rem', marginTop: 0, marginBottom: '0.25rem' }}>Rental deal analyzer</h2>
+        <h2 style={{ fontSize: '1.05rem', marginTop: 0, marginBottom: '0.25rem' }}>Rental Deal Analyzer</h2>
         <p style={{ color: 'var(--slate)', fontSize: '0.88rem', margin: '0 0 1.35rem' }}>
           Enter a rental you&apos;re weighing and see whether the numbers work.
         </p>
@@ -176,7 +176,7 @@ export default function PropertyPage() {
           className="card"
           style={{ marginBottom: '1.5rem', borderColor: impact.affordable ? 'var(--tulip-property)' : 'var(--tulip-debt)', borderStyle: 'solid', borderWidth: 1 }}
         >
-          <h2 style={{ fontSize: '1rem', marginTop: 0 }}>If you buy this</h2>
+          <h2 style={{ fontSize: '1rem', marginTop: 0 }}>If You Buy This</h2>
           {!impact.affordable && (
             <p style={{ color: 'var(--tulip-debt)', margin: '0 0 0.75rem' }}>
               You&apos;re {formatUSDExact(-impact.cashAfterCents)} short — this deal needs{' '}
@@ -217,7 +217,7 @@ export default function PropertyPage() {
       )}
 
       <section>
-        <h2 style={{ fontSize: '1rem' }}>Owned properties</h2>
+        <h2 style={{ fontSize: '1rem' }}>Owned Properties</h2>
         {(properties ?? []).map((p) => (
           <OwnedProperty key={p.id} property={p} />
         ))}

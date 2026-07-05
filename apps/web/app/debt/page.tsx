@@ -172,7 +172,7 @@ export default function DebtPage() {
       {/* Payoff order timeline */}
       {plan && plan.payoffOrder.length > 0 && (
         <section className="card" style={{ marginBottom: '1.5rem' }}>
-          <h2 style={{ fontSize: '1rem', marginTop: 0 }}>Payoff order</h2>
+          <h2 style={{ fontSize: '1rem', marginTop: 0 }}>Payoff Order</h2>
           {plan.payoffOrder.map((p, i) => (
             <div key={p.loanId} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.4rem 0' }}>
               <span
@@ -244,7 +244,7 @@ function DebtList({ debts, onChanged }: { debts: DebtDto[] | null; onChanged: ()
   return (
     <section style={{ marginBottom: '1.5rem' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-        <h2 style={{ fontSize: '1rem', margin: 0 }}>Your debts</h2>
+        <h2 style={{ fontSize: '1rem', margin: 0 }}>Your Debts</h2>
         <button className="btn-secondary" onClick={() => setShowForm(!showForm)}>
           {showForm ? 'Cancel' : '+ Add debt'}
         </button>
@@ -330,7 +330,7 @@ function StudentLoanPanel({ debts }: { debts: DebtDto[] }) {
 
   return (
     <section className="card" style={{ marginBottom: '1.5rem' }}>
-      <h2 style={{ fontSize: '1rem', marginTop: 0 }}>Student loan lab</h2>
+      <h2 style={{ fontSize: '1rem', marginTop: 0 }}>Student Loan Lab</h2>
       <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr auto', gap: '0.6rem', alignItems: 'center' }}>
         <select className="field" value={debtId} onChange={(e) => setDebtId(e.target.value)}>
           {debts.map((d) => (
