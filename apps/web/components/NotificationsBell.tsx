@@ -50,7 +50,7 @@ export function NotificationsBell() {
   }
 
   return (
-    <div ref={wrapRef} style={{ position: 'relative' }}>
+    <div ref={wrapRef} style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
       <button
         aria-label={`Notifications (${unread} unread)`}
         onClick={() => setOpen(!open)}

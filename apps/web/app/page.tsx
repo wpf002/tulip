@@ -66,7 +66,7 @@ function ProductPreview() {
         March 2032
       </p>
       <p style={{ color: 'var(--slate)', fontSize: '0.9rem', margin: '0.35rem 0 1.25rem' }}>
-        68 months · $6,059.52 total interest · avalanche
+        68 months · $6,059.52 total interest · Avalanche
       </p>
       <svg viewBox="0 0 320 80" style={{ width: '100%', display: 'block' }} aria-hidden>
         <path

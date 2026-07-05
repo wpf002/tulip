@@ -103,7 +103,7 @@ export default function DebtPage() {
         </p>
         {plan && (
           <p style={{ color: 'var(--slate)', margin: 0 }}>
-            {plan.monthsToDebtFree} months · {formatUSD(plan.totalInterestCents)} total interest ({strategy})
+            {plan.monthsToDebtFree} months · {formatUSD(plan.totalInterestCents)} total interest ({humanize(strategy)})
           </p>
         )}
         {error && <p style={{ color: 'var(--slate)' }}>{error}</p>}
@@ -130,7 +130,7 @@ export default function DebtPage() {
         <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.75rem' }}>
           {(['avalanche', 'snowball'] as const).map((s) => (
             <button key={s} className={strategy === s ? 'chip chip-active' : 'chip'} onClick={() => setStrategy(s)}>
-              {s}
+              {humanize(s)}
             </button>
           ))}
         </div>
@@ -277,7 +277,7 @@ function DebtList({ debts, onChanged }: { debts: DebtDto[] | null; onChanged: ()
           <div style={{ flex: 1 }}>
             <p style={{ margin: 0 }}>
               {d.name}
-              {d.isFederal && <span style={{ color: 'var(--tulip-retire)', fontSize: '0.8rem' }}> · federal</span>}
+              {d.isFederal && <span style={{ color: 'var(--tulip-retire)', fontSize: '0.8rem' }}> · Federal</span>}
             </p>
             <p style={{ margin: 0, color: 'var(--slate)', fontSize: '0.85rem' }}>
               {(d.aprBps / 100).toFixed(2)}% APR · min {formatUSDExact(d.minPaymentCents)}/mo

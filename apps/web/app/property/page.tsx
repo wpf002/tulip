@@ -147,7 +147,7 @@ export default function PropertyPage() {
           {field('term', 'Loan term (months)')}
           {field('rent', 'Monthly rent', { money: true })}
           {field('expenses', 'Monthly expenses', { money: true })}
-          {field('surplus', 'Your monthly surplus', { money: true })}
+          {field('surplus', 'Monthly surplus', { money: true })}
         </div>
         <button className="btn-primary" style={{ marginTop: '1.35rem' }} onClick={analyze}>
           Analyze deal
@@ -255,7 +255,7 @@ function OwnedProperty({ property }: { property: PropertyDto }) {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
         <span>
           {property.label}
-          {property.isRental && <span style={{ color: 'var(--tulip-property)', fontSize: '0.8rem' }}> · rental</span>}
+          {property.isRental && <span style={{ color: 'var(--tulip-property)', fontSize: '0.8rem' }}> · Rental</span>}
         </span>
         <span style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
           <span>
