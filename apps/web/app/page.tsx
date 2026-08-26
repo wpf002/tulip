@@ -141,10 +141,10 @@ export default function Home() {
           </p>
           <div style={{ display: 'flex', gap: '0.9rem', flexWrap: 'wrap' }}>
             <Link href="/login" className="btn-navy">
-              Plant the first seed →
+              Plant the First Seed →
             </Link>
             <a href="#how" className="btn-ghost-navy">
-              See how it works
+              See How It Works
             </a>
           </div>
           <p style={{ color: 'var(--slate-dark)', fontSize: '0.85rem', marginTop: '1.25rem' }}>
