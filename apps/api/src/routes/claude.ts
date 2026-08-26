@@ -93,7 +93,7 @@ export async function claudeRoutes(app: FastifyInstance) {
 
   app.post('/ask', { preHandler: [app.authenticate] }, async (req, reply) => {
     if (!configured()) {
-      return reply.status(503).send({ error: 'Claude is not configured (set ANTHROPIC_API_KEY)' });
+      return reply.status(503).send({ error: 'The advisor is not configured (set ANTHROPIC_API_KEY)' });
     }
     const parsed = askSchema.safeParse(req.body);
     if (!parsed.success) return reply.status(400).send({ error: parsed.error.flatten() });
@@ -111,7 +111,7 @@ export async function claudeRoutes(app: FastifyInstance) {
 
   app.post('/explain', { preHandler: [app.authenticate] }, async (req, reply) => {
     if (!configured()) {
-      return reply.status(503).send({ error: 'Claude is not configured (set ANTHROPIC_API_KEY)' });
+      return reply.status(503).send({ error: 'The advisor is not configured (set ANTHROPIC_API_KEY)' });
     }
     const parsed = explainSchema.safeParse(req.body);
     if (!parsed.success) return reply.status(400).send({ error: parsed.error.flatten() });

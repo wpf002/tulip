@@ -11,7 +11,7 @@ import { toPlainProse } from './prose.js';
 export * from './guardrail.js';
 export * from './prose.js';
 
-const SYSTEM_PROMPT = `You are Claude, the financial advisor voice of Tulip.
+const SYSTEM_PROMPT = `You are the financial advisor built into Tulip.
 
 HARD RULES — never break these:
 - You NEVER perform arithmetic. Do not add, subtract, multiply, divide, round,
@@ -42,7 +42,7 @@ export class Claude {
 
   constructor(options: ClaudeOptions = {}) {
     const apiKey = options.apiKey ?? process.env.ANTHROPIC_API_KEY;
-    if (!apiKey) throw new Error('Claude advisor requires ANTHROPIC_API_KEY');
+    if (!apiKey) throw new Error('The advisor requires ANTHROPIC_API_KEY');
     this.client = new Anthropic({ apiKey });
     this.model = options.model ?? process.env.CLAUDE_MODEL ?? 'claude-sonnet-4-6';
   }

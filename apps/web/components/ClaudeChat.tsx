@@ -35,7 +35,7 @@ export function ClaudeChat() {
     } catch (err) {
       setEntries((prev) => [
         ...prev,
-        { role: 'claude', text: err instanceof Error ? err.message : 'Claude is unavailable.' },
+        { role: 'claude', text: err instanceof Error ? err.message : 'The advisor is unavailable.' },
       ]);
     } finally {
       setBusy(false);
@@ -49,7 +49,7 @@ export function ClaudeChat() {
         style={{ position: 'fixed', right: '1.5rem', bottom: '1.5rem', borderRadius: 999, display: 'inline-flex', alignItems: 'center', gap: '0.45rem' }}
         onClick={() => setOpen(true)}
       >
-        <Spark size={16} /> Ask Claude
+        <Spark size={16} /> Ask Advisor
       </button>
     );
   }
@@ -72,7 +72,7 @@ export function ClaudeChat() {
           <span style={{ color: '#f0a63a', display: 'inline-flex' }}>
             <Spark size={16} />
           </span>
-          Claude
+          Advisor
         </strong>
         <button className="btn-link" aria-label="Close" onClick={() => setOpen(false)} style={{ fontSize: '1.1rem', lineHeight: 1 }}>
           ×
@@ -81,7 +81,7 @@ export function ClaudeChat() {
       <div style={{ flex: 1, overflowY: 'auto', display: 'grid', gap: '0.5rem', marginBottom: '0.6rem' }}>
         {entries.length === 0 && (
           <p style={{ color: 'var(--slate)', fontSize: '0.85rem' }}>
-            Ask Claude anything about your money — like “where should my next $500 go?” Every number
+            Ask the advisor anything about your money — like “where should my next $500 go?” Every number
             it gives you comes straight from your plan. It never makes one up.
           </p>
         )}
@@ -105,7 +105,7 @@ export function ClaudeChat() {
           </div>
         ))}
         {busy && (
-          <div className="typing" aria-label="Claude is thinking">
+          <div className="typing" aria-label="The advisor is thinking">
             <span />
             <span />
             <span />
@@ -116,7 +116,7 @@ export function ClaudeChat() {
         <input
           className="field"
           style={{ flex: 1 }}
-          placeholder="Ask Claude…"
+          placeholder="Ask the advisor…"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && send()}

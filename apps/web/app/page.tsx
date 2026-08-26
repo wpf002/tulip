@@ -209,13 +209,13 @@ export default function Home() {
               <span style={{ color: '#f0a63a', display: 'inline-flex' }}>
                 <Spark size={14} />
               </span>
-              Meet Claude
+              Meet your advisor
             </p>
             <h2 className="display" style={{ fontSize: 'clamp(1.9rem, 3.5vw, 2.6rem)', margin: '0 0 1.1rem' }}>
               An advisor that <em>never</em> makes the numbers up
             </h2>
             <p style={{ color: 'var(--slate)', fontSize: '1.05rem', lineHeight: 1.65, margin: 0 }}>
-              Ask “where should my next $500 go?” and Claude walks you through the answer your plan
+              Ask “where should my next $500 go?” and your advisor walks you through the answer your plan
               already worked out — nothing more. Every reply gets checked: if a number can&apos;t be
               traced to your real plan, it&apos;s flagged right there in the chat. No made-up figures,
               ever.
