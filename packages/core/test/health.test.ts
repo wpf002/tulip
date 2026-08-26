@@ -57,7 +57,7 @@ describe('computeHealthScore', () => {
     expect(h.subscores.savingsRate).toBe(0);
   });
 
-  it('exposes transparent drivers for Flint to narrate (never recompute)', () => {
+  it('exposes transparent drivers for Claude to narrate (never recompute)', () => {
     const h = computeHealthScore(BASE);
     expect(h.drivers.emergencyFundMonths).toBeCloseTo(3, 10);
     expect(h.drivers.annualInterestLoadCents).toBe(240000);

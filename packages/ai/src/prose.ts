@@ -1,5 +1,5 @@
 /**
- * Flint speaks in plain prose. The system prompt asks for it, but models slip —
+ * Claude speaks in plain prose. The system prompt asks for it, but models slip —
  * this strips any markdown that leaks through so the chat panel never shows
  * raw ** or ## markers. Pure and unit-tested; numbers pass through untouched
  * so the grounding guardrail is unaffected.

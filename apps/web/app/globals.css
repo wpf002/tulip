@@ -217,7 +217,7 @@ body {
   gap: 0.75rem;
   grid-template-columns: 1fr 1fr;
 }
-.flint-panel {
+.claude-panel {
   width: min(360px, calc(100vw - 2rem));
 }
 
@@ -234,7 +234,7 @@ body {
 .app-nav .btn-link { white-space: nowrap; }
 .app-nav .wordmark { align-items: center; display: inline-flex; gap: 0.45rem; }
 
-/* ---- Flint typing indicator (replaces AI-sounding loading text) ------- */
+/* ---- Claude typing indicator (replaces AI-sounding loading text) ------- */
 .typing { display: inline-flex; gap: 5px; align-items: center; padding: 0.4rem 0.2rem; }
 .typing span {
   width: 7px; height: 7px; border-radius: 50%;

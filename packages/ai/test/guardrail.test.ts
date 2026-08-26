@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { extractNumbers, verifyGrounded } from '../src/guardrail.js';
 
 /**
- * ROADMAP guardrail tests: assert Flint responses never introduce numbers
+ * ROADMAP guardrail tests: assert Claude responses never introduce numbers
  * absent from the engine output. verifyGrounded() is the runtime enforcement;
  * these tests pin its behavior without any network access.
  */

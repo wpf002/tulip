@@ -43,7 +43,7 @@ function tier(kind: OpportunityKind): number {
 /**
  * Rank where the next `amount` produces the most value and split it across
  * opportunities until each is capacity-filled. Pure + deterministic.
- * The LLM (Flint) never does this math — it only narrates the output.
+ * The LLM (Claude) never does this math — it only narrates the output.
  */
 export function routeMarginalDollar(amount: Cents, opportunities: Opportunity[]): RoutedDollar[] {
   const ranked = [...opportunities].sort(

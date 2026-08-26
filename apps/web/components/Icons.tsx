@@ -7,9 +7,9 @@
 export function TulipLogo({ size = 22 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" style={{ display: 'block', flexShrink: 0 }}>
-      <path d="M12 12.6C8.5 12.2 6.8 9.5 6.8 6.2 8 7.4 9.2 7.4 9.8 5.6 10.3 7.2 11 7.4 12 5c1 2.4 1.7 2.2 2.2.6.6 1.8 1.8 1.8 3-.6 0 3.3-1.7 6-5.2 6.4Z" fill="#e35b47" />
-      <path d="M12 12.4V21" stroke="#2e7a46" strokeWidth="1.8" strokeLinecap="round" />
-      <path d="M12 16.6C9.3 15.6 7.2 17.2 6.6 20.4 9.7 20.6 11.8 19.4 12 16.6Z" fill="#3f9b5c" />
+      <path d="M6 7 9 5.6 10.6 8 12 5.2 13.4 8 15 5.6 18 7 16.4 12.4 7.6 12.4Z" fill="#e35b47" />
+      <rect x="11" y="12" width="2" height="8.6" rx="0.4" fill="#2e7a46" />
+      <path d="M11 15.4 6.8 16.4 6.3 20 11 18.6Z" fill="#3f9b5c" />
     </svg>
   );
 }
@@ -23,7 +23,7 @@ export function BellIcon({ size = 18 }: { size?: number }) {
   );
 }
 
-export function FlintFlame({ size = 18 }: { size?: number }) {
+export function Spark({ size = 18 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style={{ display: 'block' }}>
       <path d="M12.5 2c2.6 3.6-1.4 5.3-1.4 8.6a2 2 0 0 0 4 .2c0-.7-.2-1.4-.6-2 2 1.1 3.3 3.2 3.3 5.6a6 6 0 1 1-12 0c0-3.4 3.7-4.8 3.7-8 0-1.2-.4-2.3-1-3.2 1.4.3 2.7 1 4 2.1-.3-1.2-.9-2.3-1.7-3.3Z" />

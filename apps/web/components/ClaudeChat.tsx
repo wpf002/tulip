@@ -2,19 +2,19 @@
 
 import { useState } from 'react';
 import { api } from '../lib/api';
-import { FlintFlame, WarningIcon } from './Icons';
+import { Spark, WarningIcon } from './Icons';
 
 interface ChatEntry {
-  role: 'user' | 'flint';
+  role: 'user' | 'claude';
   text: string;
   grounded?: boolean;
 }
 
 /**
- * Flint chat panel. Every number Flint states is engine-computed — replies
+ * Claude chat panel. Every number Claude states is engine-computed — replies
  * flagged as ungrounded by the guardrail are visibly marked.
  */
-export function FlintChat() {
+export function ClaudeChat() {
   const [open, setOpen] = useState(false);
   const [entries, setEntries] = useState<ChatEntry[]>([]);
   const [question, setQuestion] = useState('');
@@ -27,15 +27,15 @@ export function FlintChat() {
     setEntries((prev) => [...prev, { role: 'user', text: q }]);
     setBusy(true);
     try {
-      const res = await api<{ answer: string; grounded: boolean }>('/flint/ask', {
+      const res = await api<{ answer: string; grounded: boolean }>('/claude/ask', {
         method: 'POST',
         body: JSON.stringify({ question: q }),
       });
-      setEntries((prev) => [...prev, { role: 'flint', text: res.answer, grounded: res.grounded }]);
+      setEntries((prev) => [...prev, { role: 'claude', text: res.answer, grounded: res.grounded }]);
     } catch (err) {
       setEntries((prev) => [
         ...prev,
-        { role: 'flint', text: err instanceof Error ? err.message : 'Flint is unavailable.' },
+        { role: 'claude', text: err instanceof Error ? err.message : 'Claude is unavailable.' },
       ]);
     } finally {
       setBusy(false);
@@ -49,14 +49,14 @@ export function FlintChat() {
         style={{ position: 'fixed', right: '1.5rem', bottom: '1.5rem', borderRadius: 999, display: 'inline-flex', alignItems: 'center', gap: '0.45rem' }}
         onClick={() => setOpen(true)}
       >
-        <FlintFlame size={16} /> Ask Flint
+        <Spark size={16} /> Ask Claude
       </button>
     );
   }
 
   return (
     <div
-      className="card flint-panel"
+      className="card claude-panel"
       style={{
         position: 'fixed',
         right: '1.5rem',
@@ -70,9 +70,9 @@ export function FlintChat() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
         <strong style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
           <span style={{ color: '#f0a63a', display: 'inline-flex' }}>
-            <FlintFlame size={16} />
+            <Spark size={16} />
           </span>
-          Flint
+          Claude
         </strong>
         <button className="btn-link" aria-label="Close" onClick={() => setOpen(false)} style={{ fontSize: '1.1rem', lineHeight: 1 }}>
           ×
@@ -81,7 +81,7 @@ export function FlintChat() {
       <div style={{ flex: 1, overflowY: 'auto', display: 'grid', gap: '0.5rem', marginBottom: '0.6rem' }}>
         {entries.length === 0 && (
           <p style={{ color: 'var(--slate)', fontSize: '0.85rem' }}>
-            Ask Flint anything about your money — like “where should my next $500 go?” Every number
+            Ask Claude anything about your money — like “where should my next $500 go?” Every number
             it gives you comes straight from your plan. It never makes one up.
           </p>
         )}
@@ -97,7 +97,7 @@ export function FlintChat() {
             }}
           >
             {e.text}
-            {e.role === 'flint' && e.grounded === false && (
+            {e.role === 'claude' && e.grounded === false && (
               <p style={{ color: 'var(--tulip-debt)', fontSize: '0.75rem', margin: '0.4rem 0 0', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
                 <WarningIcon size={13} /> This reply used a number we couldn&apos;t tie back to your plan — double-check it.
               </p>
@@ -105,7 +105,7 @@ export function FlintChat() {
           </div>
         ))}
         {busy && (
-          <div className="typing" aria-label="Flint is thinking">
+          <div className="typing" aria-label="Claude is thinking">
             <span />
             <span />
             <span />
@@ -116,7 +116,7 @@ export function FlintChat() {
         <input
           className="field"
           style={{ flex: 1 }}
-          placeholder="Ask Flint…"
+          placeholder="Ask Claude…"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && send()}

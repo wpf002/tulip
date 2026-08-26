@@ -2,14 +2,14 @@ import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
 import { DebtType, prisma } from '@tulip/db';
 import { cents, planPayoff, routeNextDollar, type Loan, type RouterProfile } from '@tulip/core';
-import { Flint } from '@tulip/ai';
+import { Claude } from '@tulip/ai';
 import { computeNetWorth } from './networth.js';
 
 const bpsToDecimal = (bps: number) => bps / 10000;
 
 /**
- * Assemble the user's ALREADY-COMPUTED financial context. Every number Flint
- * may utter comes from here — the engines compute, Flint narrates.
+ * Assemble the user's ALREADY-COMPUTED financial context. Every number Claude
+ * may utter comes from here — the engines compute, Claude narrates.
  */
 async function buildContext(userId: string) {
   const [netWorth, debts] = await Promise.all([
@@ -88,19 +88,19 @@ async function buildContext(userId: string) {
 const askSchema = z.object({ question: z.string().min(1).max(2000) });
 const explainSchema = z.object({ recommendation: z.record(z.unknown()) });
 
-export async function flintRoutes(app: FastifyInstance) {
+export async function claudeRoutes(app: FastifyInstance) {
   const configured = () => Boolean(process.env.ANTHROPIC_API_KEY);
 
   app.post('/ask', { preHandler: [app.authenticate] }, async (req, reply) => {
     if (!configured()) {
-      return reply.status(503).send({ error: 'Flint is not configured (set ANTHROPIC_API_KEY)' });
+      return reply.status(503).send({ error: 'Claude is not configured (set ANTHROPIC_API_KEY)' });
     }
     const parsed = askSchema.safeParse(req.body);
     if (!parsed.success) return reply.status(400).send({ error: parsed.error.flatten() });
 
     const context = await buildContext(req.user.sub);
-    const flint = new Flint();
-    const result = await flint.ask(parsed.data.question, context);
+    const claude = new Claude();
+    const result = await claude.ask(parsed.data.question, context);
     return {
       answer: result.text,
       grounded: result.grounding.grounded,
@@ -111,13 +111,13 @@ export async function flintRoutes(app: FastifyInstance) {
 
   app.post('/explain', { preHandler: [app.authenticate] }, async (req, reply) => {
     if (!configured()) {
-      return reply.status(503).send({ error: 'Flint is not configured (set ANTHROPIC_API_KEY)' });
+      return reply.status(503).send({ error: 'Claude is not configured (set ANTHROPIC_API_KEY)' });
     }
     const parsed = explainSchema.safeParse(req.body);
     if (!parsed.success) return reply.status(400).send({ error: parsed.error.flatten() });
 
-    const flint = new Flint();
-    const result = await flint.explain(parsed.data.recommendation);
+    const claude = new Claude();
+    const result = await claude.explain(parsed.data.recommendation);
     return {
       answer: result.text,
       grounded: result.grounding.grounded,

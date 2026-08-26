@@ -10,7 +10,7 @@ import { goalRoutes, routerRoutes } from './routes/goals.js';
 import { budgetRoutes, reallocateRoutes } from './routes/budgets.js';
 import { propertyRoutes } from './routes/property.js';
 import { healthScoreRoutes } from './routes/health-score.js';
-import { flintRoutes } from './routes/flint.js';
+import { claudeRoutes } from './routes/claude.js';
 import { householdRoutes } from './routes/household.js';
 import { advisorRoutes } from './routes/advisor.js';
 import { notificationRoutes } from './routes/notifications.js';
@@ -37,7 +37,7 @@ export async function buildServer() {
   await app.register(reallocateRoutes, { prefix: '/reallocate' });
   await app.register(propertyRoutes, { prefix: '/property' });
   await app.register(healthScoreRoutes, { prefix: '/health' });
-  await app.register(flintRoutes, { prefix: '/flint' });
+  await app.register(claudeRoutes, { prefix: '/claude' });
   await app.register(householdRoutes, { prefix: '/household' });
   await app.register(advisorRoutes, { prefix: '/advisor' });
   await app.register(notificationRoutes, { prefix: '/notifications' });

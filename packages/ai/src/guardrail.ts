@@ -1,5 +1,5 @@
 /**
- * Guardrail: Flint NEVER does arithmetic. Every number in a Flint response must
+ * Guardrail: Claude NEVER does arithmetic. Every number in a Claude response must
  * already exist in the engine-computed context it was given. This module is
  * pure and unit-testable without any network access.
  */

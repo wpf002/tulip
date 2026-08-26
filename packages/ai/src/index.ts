@@ -1,6 +1,6 @@
 /**
- * Flint layer. THE LLM NEVER DOES ARITHMETIC.
- * @tulip/core computes every number; Flint only narrates and answers NL questions
+ * Claude layer. THE LLM NEVER DOES ARITHMETIC.
+ * @tulip/core computes every number; Claude only narrates and answers NL questions
  * over already-computed results. Every response is checked by the grounding
  * guardrail: a number absent from the engine context is rejected.
  */
@@ -11,7 +11,7 @@ import { toPlainProse } from './prose.js';
 export * from './guardrail.js';
 export * from './prose.js';
 
-const SYSTEM_PROMPT = `You are Flint, the financial advisor voice of Tulip.
+const SYSTEM_PROMPT = `You are Claude, the financial advisor voice of Tulip.
 
 HARD RULES — never break these:
 - You NEVER perform arithmetic. Do not add, subtract, multiply, divide, round,
@@ -26,25 +26,25 @@ HARD RULES — never break these:
   cents values as dollars (123456 cents = $1,234.56).
 - Never give generic financial advice detached from the user's data.`;
 
-export interface FlintOptions {
+export interface ClaudeOptions {
   apiKey?: string;
   model?: string;
 }
 
-export interface FlintReply {
+export interface ClaudeReply {
   text: string;
   grounding: GroundingResult;
 }
 
-export class Flint {
+export class Claude {
   private client: Anthropic;
   private model: string;
 
-  constructor(options: FlintOptions = {}) {
+  constructor(options: ClaudeOptions = {}) {
     const apiKey = options.apiKey ?? process.env.ANTHROPIC_API_KEY;
-    if (!apiKey) throw new Error('Flint requires ANTHROPIC_API_KEY');
+    if (!apiKey) throw new Error('Claude advisor requires ANTHROPIC_API_KEY');
     this.client = new Anthropic({ apiKey });
-    this.model = options.model ?? process.env.FLINT_MODEL ?? 'claude-sonnet-4-6';
+    this.model = options.model ?? process.env.CLAUDE_MODEL ?? 'claude-sonnet-4-6';
   }
 
   private async complete(userContent: string): Promise<string> {
@@ -61,7 +61,7 @@ export class Flint {
     return toPlainProse(text);
   }
 
-  private async guarded(userContent: string, context: unknown): Promise<FlintReply> {
+  private async guarded(userContent: string, context: unknown): Promise<ClaudeReply> {
     let text = await this.complete(userContent);
     let grounding = verifyGrounded(text, context);
     if (!grounding.grounded) {
@@ -75,7 +75,7 @@ export class Flint {
   }
 
   /** Narrate a structured engine output in plain language. Numbers come from it, only. */
-  async explain(recommendation: unknown): Promise<FlintReply> {
+  async explain(recommendation: unknown): Promise<ClaudeReply> {
     return this.guarded(
       `Explain this engine-computed recommendation to the user in plain language (2-5 sentences).\n\nCONTEXT JSON:\n${JSON.stringify(recommendation, null, 2)}`,
       recommendation,
@@ -83,7 +83,7 @@ export class Flint {
   }
 
   /** Answer a natural-language question grounded in already-computed context. */
-  async ask(question: string, context: unknown): Promise<FlintReply> {
+  async ask(question: string, context: unknown): Promise<ClaudeReply> {
     return this.guarded(
       `Answer the user's question using ONLY the engine-computed context below.\n\nQUESTION: ${question}\n\nCONTEXT JSON:\n${JSON.stringify(context, null, 2)}`,
       context,

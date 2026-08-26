@@ -14,7 +14,7 @@ import { AppNav } from '../../components/AppNav';
 import { NetWorthTrend } from '../../components/NetWorthTrend';
 import { PlaidLinkButton } from '../../components/PlaidLinkButton';
 import { HealthDial } from '../../components/HealthDial';
-import { FlintChat } from '../../components/FlintChat';
+import { ClaudeChat } from '../../components/ClaudeChat';
 import { RecentTransactions } from '../../components/RecentTransactions';
 
 const TYPE_LABELS: Record<AccountDto['type'], string> = {
@@ -150,7 +150,7 @@ export default function DashboardPage() {
 
       <RecentTransactions />
 
-      <FlintChat />
+      <ClaudeChat />
     </main>
   );
 }
