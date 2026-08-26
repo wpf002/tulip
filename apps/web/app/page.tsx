@@ -116,10 +116,10 @@ export default function Home() {
         </span>
         <nav style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
           <Link href="/login" className="btn-ghost-navy">
-            Log in
+            Log In
           </Link>
           <Link href="/login" className="btn-navy">
-            Get started
+            Get Started
           </Link>
         </nav>
       </header>
@@ -274,7 +274,7 @@ export default function Home() {
             Takes about two minutes to see your debt-free date.
           </p>
           <Link href="/login" className="btn-primary" style={{ fontSize: '1.05rem', padding: '0.9rem 2rem', textDecoration: 'none' }}>
-            Get started free
+            Get Started Free
           </Link>
         </div>
       </section>

@@ -39,7 +39,7 @@ export function AppNav() {
           router.push('/login');
         }}
       >
-        Log out
+        Log Out
       </button>
     </nav>
   );

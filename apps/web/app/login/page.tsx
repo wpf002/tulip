@@ -60,7 +60,7 @@ export default function LoginPage() {
         />
         {error && <p style={{ color: 'var(--tulip-debt)', margin: 0 }}>{error}</p>}
         <button type="submit" disabled={busy} className="btn-primary">
-          {busy ? '…' : mode === 'login' ? 'Log in' : 'Create account'}
+          {busy ? '…' : mode === 'login' ? 'Log In' : 'Create Account'}
         </button>
       </form>
       <button
@@ -68,7 +68,7 @@ export default function LoginPage() {
         className="btn-link"
         style={{ marginTop: '1rem' }}
       >
-        {mode === 'login' ? 'New here? Create an account' : 'Have an account? Log in'}
+        {mode === 'login' ? 'New Here? Create an Account' : 'Have an Account? Log In'}
       </button>
     </main>
   );

@@ -67,12 +67,12 @@ export default function ClientsPage() {
         <h2 style={{ fontSize: '1rem', marginTop: 0, marginBottom: '0.25rem' }}>Add a Client</h2>
         <p style={{ color: 'var(--slate)', fontSize: '0.88rem', margin: '0 0 1rem' }}>
           An access code is a one-time code your client creates for you. Ask them to open{' '}
-          <strong>Sharing → Advisor access</strong> and tap <strong>Generate access code</strong>, then paste it here.
+          <strong>Sharing → Advisor access</strong> and tap <strong>Generate Access Code</strong>, then paste it here.
         </p>
         <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
           <input className="field" style={{ flex: 1, minWidth: 180 }} placeholder="Paste the code your client gave you" value={code} onChange={(e) => setCode(e.target.value)} />
           <button className="btn-primary" disabled={!code.trim()} onClick={addClient}>
-            Add client
+            Add Client
           </button>
         </div>
         {notice && <p style={{ color: 'var(--slate)', margin: '0.6rem 0 0' }}>{notice}</p>}
@@ -119,7 +119,7 @@ function ClientCard({ client, onRemoved }: { client: ClientDto; onRemoved: () =>
             style={{ color: 'var(--tulip-debt)' }}
             onClick={() => api(`/advisor/clients/${client.id}`, { method: 'DELETE' }).then(onRemoved)}
           >
-            remove
+            Remove
           </button>
         </span>
       </div>

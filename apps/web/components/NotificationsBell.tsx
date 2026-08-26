@@ -86,7 +86,7 @@ export function NotificationsBell() {
             <strong style={{ fontSize: '0.9rem' }}>Notifications</strong>
             {unread > 0 && (
               <button className="btn-link" style={{ fontSize: '0.75rem' }} onClick={() => api('/notifications/read-all', { method: 'POST' }).then(load)}>
-                mark all read
+                Mark All Read
               </button>
             )}
           </div>
@@ -98,12 +98,12 @@ export function NotificationsBell() {
               <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.35rem' }}>
                 {n.actionUrl && (
                   <Link href={n.actionUrl} className="btn-link" style={{ fontSize: '0.75rem' }} onClick={() => markRead(n.id)}>
-                    Take a look →
+                    Take a Look →
                   </Link>
                 )}
                 {!n.read && (
                   <button className="btn-link" style={{ fontSize: '0.75rem' }} onClick={() => markRead(n.id)}>
-                    dismiss
+                    Dismiss
                   </button>
                 )}
               </div>

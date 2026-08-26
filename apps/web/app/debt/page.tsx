@@ -246,7 +246,7 @@ function DebtList({ debts, onChanged }: { debts: DebtDto[] | null; onChanged: ()
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
         <h2 style={{ fontSize: '1rem', margin: 0 }}>Your Debts</h2>
         <button className="btn-secondary" onClick={() => setShowForm(!showForm)}>
-          {showForm ? 'Cancel' : '+ Add debt'}
+          {showForm ? 'Cancel' : '+ Add Debt'}
         </button>
       </div>
 
@@ -267,7 +267,7 @@ function DebtList({ debts, onChanged }: { debts: DebtDto[] | null; onChanged: ()
           </div>
           {error && <p style={{ color: 'var(--tulip-debt)', margin: 0 }}>{error}</p>}
           <button className="btn-primary" onClick={addDebt} disabled={!form.name || !form.balance || !form.apr}>
-            Save debt
+            Save Debt
           </button>
         </div>
       )}

@@ -162,7 +162,7 @@ export default function SharingPage() {
             )}
 
             <button className="btn-link" style={{ justifySelf: 'start' }} onClick={() => act(() => api('/household/leave', { method: 'POST' }), 'Left the household.')}>
-              Leave household
+              Leave Household
             </button>
           </div>
         )}
@@ -184,7 +184,7 @@ export default function SharingPage() {
               })
             }
           >
-            Generate access code
+            Generate Access Code
           </button>
           {grantCode && (
             <span>
@@ -206,7 +206,7 @@ export default function SharingPage() {
                   style={{ marginLeft: '0.75rem', color: 'var(--tulip-debt)' }}
                   onClick={() => act(() => api(`/advisor/grants/${g.advisorId}`, { method: 'DELETE' }), 'Access revoked.')}
                 >
-                  revoke
+                  Revoke
                 </button>
               </p>
             ))}

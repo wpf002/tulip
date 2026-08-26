@@ -265,7 +265,7 @@ function OwnedProperty({ property }: { property: PropertyDto }) {
             </span>
           </span>
           <button className="btn-secondary" onClick={analyze} disabled={busy}>
-            {busy ? '…' : analysis ? 'Refresh' : 'Sell vs hold'}
+            {busy ? '…' : analysis ? 'Refresh' : 'Sell vs Hold'}
           </button>
         </span>
       </div>
